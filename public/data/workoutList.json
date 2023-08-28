@@ -1,0 +1,30 @@
+[
+  {
+    "workoutId": 5,
+    "workoutType": "strength",
+    "name": "Lower - glute focused",
+    "caloriesBurnt": 454,
+    "completedDateTime": "2023-04-23T12:44:33"
+  },
+  {
+    "workoutId": 4,
+    "workoutType": "cardio",
+    "name": "Lower - glute focused",
+    "caloriesBurnt": 454,
+    "completedDateTime": "2023-04-23T12:44:33"
+  },
+  {
+    "workoutId": 3,
+    "workoutType": "strength",
+    "name": "Back and shoulders",
+    "caloriesBurnt": 454,
+    "completedDateTime": "2023-04-23T12:44:33"
+  },
+  {
+    "workoutId": 2,
+    "workoutType": "strength",
+    "name": "Lower - quad focused",
+    "caloriesBurnt": 454,
+    "completedDateTime": "2023-04-23T12:44:33"
+  }
+]

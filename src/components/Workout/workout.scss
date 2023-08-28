@@ -1,0 +1,32 @@
+.new-round {
+  background-color: #feb35a;
+}
+
+.set-row {
+  display: flex;
+  align-items: center;
+}
+
+.active-round {
+  background-color: #feb35a;
+
+  .set-row {
+    border-radius: 25px;
+  }
+
+  .set-row:nth-child(1n) {
+    background-color: #b0d298;
+  }
+
+  .set-row:nth-child(2n) {
+    background-color: #63b5ff;
+  }
+}
+
+.complete-round {
+  background-color: #b0d298;
+
+  &.odd {
+    background-color: #63b5ff;
+  }
+}

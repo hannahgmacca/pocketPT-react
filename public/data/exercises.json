@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "exerciseName": "barbell squat",
+    "defaultRepCount": 12,
+    "defaultWeight": 60,
+    "label": "barbell"
+  },
+  {
+    "id": 2,
+    "exerciseName": "barbell lunge",
+    "defaultRepCount": 12,
+    "defaultWeight": 60
+  },
+  {
+    "id": 3,
+    "exerciseName": "hip thrust",
+    "defaultRepCount": 12,
+    "defaultWeight": 60
+  },
+  {
+    "id": 4,
+    "exerciseName": "leg extension",
+    "defaultRepCount": 12,
+    "defaultWeight": 60
+  },
+  {
+    "id": 5,
+    "exerciseName": "hip abductor",
+    "defaultRepCount": 12,
+    "defaultWeight": 60
+  }
+]

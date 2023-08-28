@@ -1,0 +1,13 @@
+.workout-item {
+  border-radius: 15px;
+  border: 1px solid #181b2d;
+
+  .workout-type,
+  .workout-time-since {
+    color: #7c828c;
+  }
+
+  .workout-type {
+    text-transform: capitalize;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "strength": {
+    "activeWorkoutId": 1,
+    "progress": 0.8
+  },
+  "cardio": {
+    "activeWorkoutId": null
+  },
+  "hiit": {
+    "activeWorkoutId": null
+  }
+}

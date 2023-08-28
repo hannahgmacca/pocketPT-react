@@ -1,0 +1,42 @@
+import {
+  ActionNames,
+  ActionsUnion,
+  createAction,
+} from "../../../hooks-store/action-factory";
+import { Set } from "../../../models/Set";
+import { Round } from "../../../models/Round";
+import { Exercise } from "../../../models/Exercise";
+import { Workout } from "../../../models/Workout";
+
+export enum WorkoutActionList {
+  ADD_SET = "ADD_SET",
+  ADD_ROUND = "ADD_ROUND",
+  COMPLETE_ROUND = "COMPLETE_ROUND",
+  UPDATE_SET = "UPDATE_SET",
+  SET_WORKOUT = "SET_WORKOUT",
+}
+
+export type WorkoutActionNames = ActionNames<typeof WorkoutActionList>;
+
+export const WorkoutActions = {
+  addRound: (payload: { roundExercises: Exercise[] }) =>
+    createAction(WorkoutActionList.ADD_ROUND, payload),
+
+  addSet: (payload: { newExercise: Exercise }) =>
+    createAction(WorkoutActionList.ADD_SET, payload),
+
+  updateSet: (payload: { setIndex: number; newSet: Set }) =>
+    createAction(WorkoutActionList.UPDATE_SET, payload),
+
+  setWorkout: (payload: Workout) =>
+    createAction(WorkoutActionList.SET_WORKOUT, payload),
+
+  completeRound: () => createAction(WorkoutActionList.COMPLETE_ROUND),
+};
+
+export type WorkoutActionsUnion = ActionsUnion<typeof WorkoutActions>;
+
+export type WorkoutAction<ActionName> = Extract<
+  WorkoutActionsUnion,
+  { type: ActionName }
+>;

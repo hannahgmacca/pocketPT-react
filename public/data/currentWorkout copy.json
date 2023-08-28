@@ -1,0 +1,10 @@
+{
+  "workoutName": "",
+  "workoutType": "",
+  "isActive": true,
+  "completedRoundList": [],
+  "activeRoundList": [],
+  "caloriesBurnt": 0,
+  "startedDatedTime": null,
+  "completedDatedTime": null
+}

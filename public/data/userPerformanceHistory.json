@@ -1,0 +1,64 @@
+{
+  "userId": 1,
+  "exerciseId": 3,
+  "exerciseName": "Squats",
+  "personalBestRounds": [
+    {
+      "setList": [
+        {
+          "exercise": {
+            "exerciseName": "Barbell Squat",
+            "defaultRepCount": 12,
+            "userPerformance": {
+              "personalBestSet": {
+                "totalWeight": {
+                  "repCount": 10,
+                  "completedDatedTime": "2023-03-23T12:00:00Z",
+                  "weightKg": 75
+                }
+              }
+            }
+          },
+          "repCount": 12,
+          "weightKg": 40,
+          "completedDatedTime": "2023-03-23T12:00:00Z"
+        },
+        {
+          "exercise": {
+            "exerciseName": "Barbell Squat",
+            "defaultRepCount": 12,
+            "userPerformance": {
+              "personalBestSet": {
+                "totalWeight": {
+                  "repCount": 10,
+                  "weightKg": 75
+                }
+              }
+            }
+          },
+          "repCount": 10,
+          "weightKg": 60,
+          "completedDatedTime": "2023-03-23T12:00:00Z"
+        },
+        {
+          "exercise": {
+            "exerciseName": "Barbell Squat",
+            "defaultRepCount": 12,
+            "userPerformance": {
+              "personalBestSet": {
+                "totalWeight": {
+                  "repCount": 10,
+                  "weightKg": 75
+                }
+              }
+            }
+          },
+          "repCount": 8,
+          "weightKg": 80,
+          "isPersonalBest": true,
+          "completedDatedTime": "2023-03-23T12:00:00Z"
+        }
+      ]
+    }
+  ]
+}

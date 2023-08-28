@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Col, Container, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,10 +8,25 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-const BottomNavigation: React.FC = () => {
+const BottomNavigation = () => {
+  const [workoutModalOpen, setWorkoutModalOpen] = useState(false);
   const background = "#3580FF";
+
+  const handleStartWorkout = (workoutType: number) => {
+    switch (workoutType) {
+      case 1:
+        // post to api to initiate new workout
+        // if success, navigate to /workout
+        return;
+      case 2:
+        // post to api to initiate new workout
+        // if success, navigate to /workout
+        return;
+    }
+  };
+
   return (
-    <Navbar bg="dark" fixed="bottom">
+    <Navbar fixed="bottom" style={{ background: "#0a0c16" }}>
       <Container fluid className="justify-content-between">
         <Col className="d-flex justify-content-center" xs={3}>
           <Link to="/">
@@ -23,14 +38,17 @@ const BottomNavigation: React.FC = () => {
           </Link>
         </Col>
         <Col className="d-flex justify-content-center" xs={3}>
-          <Link to="workout">
+          <button
+            className="bg-transparent border-0"
+            onClick={() => setWorkoutModalOpen(true)}
+          >
             <FontAwesomeIcon
               className="bg-white rounded-5"
               size="4x"
               icon={faCirclePlus}
-              style={{ color: background }}
+              style={{ color: background, border: `${background} 1px solid` }}
             />
-          </Link>
+          </button>
         </Col>
         <Col className="d-flex justify-content-center" xs={3}>
           <Link to="profile">
