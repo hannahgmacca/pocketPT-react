@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import WorkoutReducer, { initialWorkoutState } from "./state/workoutReducer";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Card from "../Card/Card";
 import { Set } from "../../models/Set";
 // import { useRouteMatch } from "react-router-dom";
 import { WorkoutActions } from "./state/workoutActions";
 import "./workout.scss";
-import NumberInput from "../NumberInput";
 import { Exercise } from "../../models/Exercise";
 import ActiveRound from "./sections/activeRound";
 import NewRound from "./sections/newRound";
@@ -109,7 +108,7 @@ const Workout = () => {
               <Row>
                 <Col>
                   <h5 className="fw-bold text-start text-capitalize">
-                    {round.setList[0].exercise.exerciseName}
+                    {/* {round.setList[0].exercise.exerciseName} */}
                   </h5>
                 </Col>
                 <Col className="d-flex justify-content-end"></Col>

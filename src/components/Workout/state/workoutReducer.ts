@@ -44,7 +44,7 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     return {
       ...state,
       activeRound: {
-        exerciseCount: exercises.length,
+        ex: exercises.length,
         setList: setList,
       },
     };

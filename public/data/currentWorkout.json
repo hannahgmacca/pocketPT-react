@@ -62,7 +62,7 @@
   "activeRound": {
     "setList": [
       {
-        "exercises": {
+        "exercise": {
           "exerciseName": "Leg Press",
           "defaultRepCount": 12,
           "userPerformance": {

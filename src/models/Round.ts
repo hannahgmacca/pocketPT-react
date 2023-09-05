@@ -1,6 +1,7 @@
 import { Set } from "./Set";
+import { SuperSet } from "./SuperSet";
 
 export interface Round {
-  exerciseCount;
-  setList: Set[];
+  setList: Array<Set | SuperSet>;
+  Label: string;
 }

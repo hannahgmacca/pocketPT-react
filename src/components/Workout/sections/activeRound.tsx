@@ -35,9 +35,9 @@ const ActiveRound = (props: Props) => {
         <Row>
           <Col>
             <h5 className="fw-bold text-start text-capitalize">
-              {activeRound.exerciseCount > 1
+              {/* { typeof activeRound.setList == 'set'
                 ? "Super Set"
-                : activeRound.setList[0].exercise.exerciseName}
+                : activeRound.setList[0].exercise.exerciseName} */}
             </h5>
           </Col>
           {/* TODO */}
@@ -64,7 +64,6 @@ const ActiveRound = (props: Props) => {
         {activeRound.setList.map((set, index) => {
           return (
             <>
-              {/* {activeRound.exerciseCount > 1 && set.exercise.exerciseName} */}
               <Row key={index} className="set-row p-1 mb-1 text-black">
                 <Col xs={2}>
                   <span className="white bubble">{index + 1}</span>
@@ -95,9 +94,7 @@ const ActiveRound = (props: Props) => {
         })}
         <Row>
           <Col>
-            <Button onClick={() => onAddSet(activeRound.setList[0].exercise)}>
-              Add Set
-            </Button>
+            <Button onClick={() => onAddSet}>Add Set</Button>
           </Col>
           <Col></Col>
           <Col>
