@@ -7,6 +7,7 @@ import {
   faCirclePlus,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import NewWorkoutModal from "./NewWorkoutModal";
 
 const BottomNavigation = () => {
   const [workoutModalOpen, setWorkoutModalOpen] = useState(false);
@@ -60,6 +61,10 @@ const BottomNavigation = () => {
           </Link>
         </Col>
       </Container>
+      <NewWorkoutModal
+        workoutModalOpen={workoutModalOpen}
+        setWorkoutModalOpen={setWorkoutModalOpen}
+      ></NewWorkoutModal>
     </Navbar>
   );
 };

@@ -17,7 +17,6 @@ const NewRound = (props: Props) => {
 
   const onUpdateExercise = (newExercise: Exercise[]) => {
     setSelectedExercise(newExercise);
-    console.log(newExercise);
   };
 
   useEffect(() => {
@@ -39,12 +38,8 @@ const NewRound = (props: Props) => {
     // setIsLoading(false);
   }, []);
 
-  useEffect(() => {
-    console.log(selectedExercise);
-  }, [selectedExercise]);
-
-  const onAddExercise = () => {
-    if (!selectedExercise) return;
+  const onStartRound = () => {
+    if (!selectedExercise || selectedExercise.length === 0) return;
     onAddRound(selectedExercise);
     console.log(selectedExercise);
   };
@@ -60,7 +55,9 @@ const NewRound = (props: Props) => {
               suggestions={exerciseOptions}
               onChange={onUpdateExercise}
             ></ExercisePicker>
-            <Button onClick={() => onAddExercise()}>Add Set</Button>
+            <Button className="mt-2" onClick={() => onStartRound()}>
+              Start round
+            </Button>
           </Col>
         </Row>
       </Container>

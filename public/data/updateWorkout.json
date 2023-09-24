@@ -1,0 +1,9 @@
+{
+  "response": { "status": 200, "message": "", "error": "" },
+  "workout": {
+    "workoutName": "New workout",
+    "workoutType": "strength",
+    "isActive": true,
+    "completedRoundList": []
+  }
+}

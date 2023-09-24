@@ -1,5 +1,5 @@
 .new-round {
-  background-color: #feb35a;
+  background-color: #feb35a !important;
 }
 
 .set-row {
@@ -8,7 +8,7 @@
 }
 
 .active-round {
-  background-color: #feb35a;
+  background-color: #feb35a !important;
 
   .set-row {
     border-radius: 25px;
@@ -26,7 +26,7 @@
 .complete-round {
   background-color: #b0d298;
 
-  &.odd {
+  div &.odd {
     background-color: #63b5ff;
   }
 }

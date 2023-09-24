@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useReducer } from "react";
 import WorkoutReducer, { initialWorkoutState } from "./state/workoutReducer";
-import { Col, Container, Row } from "react-bootstrap";
-import Card from "../Card/Card";
+import { Container } from "react-bootstrap";
 import { Set } from "../../models/Set";
 // import { useRouteMatch } from "react-router-dom";
 import { WorkoutActions } from "./state/workoutActions";
@@ -9,10 +8,11 @@ import "./workout.scss";
 import { Exercise } from "../../models/Exercise";
 import ActiveRound from "./sections/activeRound";
 import NewRound from "./sections/newRound";
+import PreviousRound from "./sections/previousRound";
 
-interface RouterParams {
-  workoutId: string;
-}
+// interface RouterParams {
+//   workoutId: string;
+// }
 
 const Workout = () => {
   const [state, dispatch] = useReducer(WorkoutReducer, initialWorkoutState);
@@ -23,14 +23,16 @@ const Workout = () => {
   const onFirstLoad = useCallback(async (workoutId?: string) => {
     // if (!workoutId) {
     try {
-      fetch("/data/currentWorkout.json", {
+      fetch("/data/updateWorkout.json", {
         method: "GET",
         headers: {
           Accept: "application/json",
         },
       })
         .then((response) => response.json())
-        .then((response) => dispatch(WorkoutActions.setWorkout(response)));
+        .then((response) =>
+          dispatch(WorkoutActions.setWorkout(response.workout))
+        );
 
       //setIsLoading(false);
     } catch (err) {
@@ -47,10 +49,16 @@ const Workout = () => {
   }, [onFirstLoad, state.workoutId]);
 
   const onUpdateRepCount = useCallback(
-    (setIndex: number, set: Set, newRepCount: number | undefined) => {
+    (
+      setIndex: number,
+      setItemIndex: number,
+      set: Set,
+      newRepCount: number | undefined
+    ) => {
       dispatch(
         WorkoutActions.updateSet({
           setIndex,
+          setItemIndex,
           newSet: { ...set, repCount: newRepCount || 0 },
         })
       );
@@ -59,10 +67,16 @@ const Workout = () => {
   );
 
   const onUpdateWeightValue = useCallback(
-    (setIndex: number, set: Set, newWeightValue: number | undefined) => {
+    (
+      setIndex: number,
+      setItemIndex: number,
+      set: Set,
+      newWeightValue: number | undefined
+    ) => {
       dispatch(
         WorkoutActions.updateSet({
           setIndex,
+          setItemIndex,
           newSet: { ...set, weightKg: newWeightValue || 0 },
         })
       );
@@ -74,12 +88,16 @@ const Workout = () => {
     dispatch(WorkoutActions.completeRound());
   };
 
-  const onAddSet = (newExercise: Exercise) => {
-    dispatch(WorkoutActions.addSet({ newExercise: newExercise }));
+  const onAddSet = () => {
+    dispatch(WorkoutActions.addSet());
   };
 
   const onAddRound = (roundExercises: Exercise[]) => {
     dispatch(WorkoutActions.addRound({ roundExercises }));
+  };
+
+  const onEditRound = (roundIndex: number) => {
+    dispatch(WorkoutActions.editRound({ roundIndex }));
   };
 
   return (
@@ -98,47 +116,14 @@ const Workout = () => {
         <NewRound onAddRound={onAddRound} />
       )}
 
-      {completedRoundList.map((round, index) => {
+      {completedRoundList.map((round, roundIndex) => {
         return (
-          <Card
-            key={index}
-            className={`complete-round ${index % 2 === 0 && "odd"}`}
-          >
-            <Container className="p-4 fw-medium text-center">
-              <Row>
-                <Col>
-                  <h5 className="fw-bold text-start text-capitalize">
-                    {/* {round.setList[0].exercise.exerciseName} */}
-                  </h5>
-                </Col>
-                <Col className="d-flex justify-content-end"></Col>
-              </Row>
-
-              <Row>
-                <Col xs={10}>
-                  {round.setList.map((set, index) => {
-                    return (
-                      <Row key={index} className="p-1">
-                        <Col xs={2}>
-                          <span className="white bubble">{index + 1}</span>
-                        </Col>
-                        <Col xs={2}>
-                          <span>{set.repCount}</span>
-                        </Col>
-                        <Col xs={1}>
-                          <span>{"x"}</span>
-                        </Col>
-                        <Col xs={2}>
-                          <span>{set.weightKg}</span>
-                        </Col>
-                      </Row>
-                    );
-                  })}
-                </Col>
-                <Col xs={2}></Col>
-              </Row>
-            </Container>
-          </Card>
+          <PreviousRound
+            key={roundIndex}
+            round={round}
+            index={roundIndex}
+            onEditRound={onEditRound}
+          ></PreviousRound>
         );
       })}
     </Container>

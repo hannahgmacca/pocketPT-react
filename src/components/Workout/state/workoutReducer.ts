@@ -1,6 +1,6 @@
 import { Handlers, createReducer } from "../../../hooks-store/action-factory";
 import { Exercise } from "../../../models/Exercise";
-import { Round } from "../../../models/Round";
+import { Round, RoundSetType } from "../../../models/Round";
 import { Set } from "../../../models/Set";
 import { Workout, WorkoutType } from "../../../models/Workout";
 import {
@@ -33,7 +33,7 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
       };
     }
 
-    const setList: Set[] = exercises.map((e) => {
+    const setItem: Set[] = exercises.map((e) => {
       return {
         exercise: e,
         repCount: e.defaultRepCount,
@@ -41,11 +41,29 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
       };
     });
 
+    const setGroup: Set[][] = [setItem];
+
+    let roundSetType: RoundSetType;
+    switch (exercises.length) {
+      case 1:
+        roundSetType = RoundSetType.singleSet;
+        break;
+      case 2:
+        roundSetType = RoundSetType.superSet;
+        break;
+      case 3:
+        roundSetType = RoundSetType.triSet;
+        break;
+      default:
+        roundSetType = RoundSetType.giantSet;
+        break;
+    }
+
     return {
       ...state,
       activeRound: {
-        ex: exercises.length,
-        setList: setList,
+        setList: setGroup,
+        roundSetType: roundSetType,
       },
     };
   },
@@ -55,33 +73,35 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     action: WorkoutAction<WorkoutActionList.ADD_SET>
   ) => {
     if (!state.activeRound) return { ...state };
-    const { newExercise } = action.payload;
     const { activeRound } = state;
 
-    // set rep count
-    const repCount =
-      activeRound.setList.length > 1
-        ? activeRound.setList[activeRound.setList.length - 1].repCount
-        : newExercise.defaultRepCount;
+    const newSetGroup: Set[] = [
+      ...activeRound.setList[activeRound.setList.length - 1].map((setItem) => {
+        // set default rep count from previous set
+        const repCount =
+          activeRound.setList.length > 1
+            ? setItem.repCount
+            : setItem.exercise.defaultRepCount;
 
-    // set default weight
-    const weightKg =
-      activeRound.setList.length > 1
-        ? activeRound.setList[activeRound.setList.length - 1].weightKg
-        : newExercise.defaultWeight;
+        // set default weight from previous set
+        const weightKg =
+          activeRound.setList.length > 1
+            ? setItem.weightKg
+            : setItem.exercise.defaultRepCount;
+
+        return {
+          exercise: setItem.exercise,
+          repCount: repCount,
+          weightKg: weightKg,
+        };
+      }),
+    ];
 
     return {
       ...state,
       activeRound: {
         ...activeRound,
-        setList: [
-          ...activeRound.setList,
-          {
-            exercise: newExercise,
-            repCount: repCount,
-            weightKg: weightKg,
-          },
-        ],
+        setList: [...activeRound.setList, newSetGroup],
       },
     };
   },
@@ -91,13 +111,19 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     action: WorkoutAction<WorkoutActionList.UPDATE_SET>
   ) => {
     if (!state.activeRound) return { ...state };
-    const { setIndex, newSet } = action.payload;
+    const { setIndex, setItemIndex, newSet } = action.payload;
 
-    const updatedSets = state.activeRound.setList.map((set, setIdx) => {
-      if (setIdx === setIndex) {
-        return newSet;
+    const updatedSets = state.activeRound.setList.map((setGroup, stIndex) => {
+      if (stIndex === setIndex) {
+        const updatedSetItems = setGroup.map((setItem, stItemIndex) => {
+          if (stItemIndex === setItemIndex) {
+            return newSet;
+          }
+          return setItem;
+        });
+        return updatedSetItems;
       }
-      return set;
+      return setGroup;
     });
 
     return {
@@ -127,6 +153,32 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
       ...state,
       activeRound: undefined,
       completedRoundList: [...state.completedRoundList, activeRound],
+    };
+  },
+
+  [WorkoutActionList.EDIT_ROUND]: (
+    state,
+    action: WorkoutAction<WorkoutActionList.EDIT_ROUND>
+  ) => {
+    const { activeRound, completedRoundList } = state;
+    const { roundIndex } = action.payload;
+
+    // find new active round
+    const newActiveRound = completedRoundList.find(
+      (round, index) => index === roundIndex
+    );
+
+    // remove new active round from completed rounds
+    const newCompletedRoundList = [...completedRoundList];
+    newCompletedRoundList.splice(roundIndex, 1);
+
+    // add old active round to completed rounds
+    if (activeRound) newCompletedRoundList.push(activeRound);
+
+    return {
+      ...state,
+      activeRound: newActiveRound,
+      completedRoundList: [...newCompletedRoundList],
     };
   },
 };

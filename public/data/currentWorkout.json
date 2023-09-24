@@ -5,9 +5,108 @@
   "completedRoundList": [
     {
       "setList": [
+        [
+          {
+            "exercise": {
+              "exerciseName": "Barbell Squat",
+              "defaultRepCount": 12,
+              "userPerformance": {
+                "personalBestSet": {
+                  "totalWeight": {
+                    "repCount": 10,
+                    "completedDatedTime": "2023-03-23T12:00:00Z",
+                    "weightKg": 75
+                  }
+                }
+              }
+            },
+            "repCount": 12,
+            "weightKg": 40
+          },
+          {
+            "exercise": {
+              "exerciseName": "Goblet Squat",
+              "defaultRepCount": 12,
+              "userPerformance": {
+                "personalBestSet": {
+                  "totalWeight": {
+                    "repCount": 10,
+                    "completedDatedTime": "2023-03-23T12:00:00Z",
+                    "weightKg": 75
+                  }
+                }
+              }
+            },
+            "repCount": 12,
+            "weightKg": 40
+          }
+        ],
+        [
+          {
+            "exercise": {
+              "exerciseName": "Barbell Squat",
+              "defaultRepCount": 12,
+              "userPerformance": {
+                "personalBestSet": {
+                  "totalWeight": {
+                    "repCount": 10,
+                    "completedDatedTime": "2023-03-23T12:00:00Z",
+                    "weightKg": 75
+                  }
+                }
+              }
+            },
+            "repCount": 10,
+            "weightKg": 60
+          },
+          {
+            "exercise": {
+              "exerciseName": "Goblet Squat",
+              "defaultRepCount": 12,
+              "userPerformance": {
+                "personalBestSet": {
+                  "totalWeight": {
+                    "repCount": 10,
+                    "completedDatedTime": "2023-03-23T12:00:00Z",
+                    "weightKg": 75
+                  }
+                }
+              }
+            },
+            "repCount": 12,
+            "weightKg": 40
+          }
+        ],
+        [
+          {
+            "exercise": {
+              "exerciseName": "Barbell Squat",
+              "defaultRepCount": 12,
+              "userPerformance": {
+                "personalBestSet": {
+                  "totalWeight": {
+                    "repCount": 10,
+                    "completedDatedTime": "2023-03-23T12:00:00Z",
+                    "weightKg": 75
+                  }
+                }
+              }
+            },
+            "repCount": 8,
+            "weightKg": 80
+          }
+        ]
+      ],
+      "roundSetType": "Tri Set"
+    }
+  ],
+  "activeRound": {
+    "roundSetType": "Single Set",
+    "setList": [
+      [
         {
           "exercise": {
-            "exerciseName": "Barbell Squat",
+            "exerciseName": "Barbell Lunge E/L",
             "defaultRepCount": 12,
             "userPerformance": {
               "personalBestSet": {
@@ -21,27 +120,31 @@
           },
           "repCount": 12,
           "weightKg": 40
-        },
+        }
+      ],
+      [
         {
           "exercise": {
-            "exerciseName": "Barbell Squat",
+            "exerciseName": "Barbell Lunge E/L",
             "defaultRepCount": 12,
             "userPerformance": {
               "personalBestSet": {
                 "totalWeight": {
                   "repCount": 10,
                   "completedDatedTime": "2023-03-23T12:00:00Z",
-                  "weightKg": 75
+                  "weightKg": 50
                 }
               }
             }
           },
           "repCount": 10,
           "weightKg": 60
-        },
+        }
+      ],
+      [
         {
           "exercise": {
-            "exerciseName": "Barbell Squat",
+            "exerciseName": "Barbell Lunge E/L",
             "defaultRepCount": 12,
             "userPerformance": {
               "personalBestSet": {
@@ -54,65 +157,12 @@
             }
           },
           "repCount": 8,
-          "weightKg": 80
+          "weightKg": 70
         }
       ]
-    }
-  ],
-  "activeRound": {
-    "setList": [
-      {
-        "exercise": {
-          "exerciseName": "Leg Press",
-          "defaultRepCount": 12,
-          "userPerformance": {
-            "personalBestSet": {
-              "totalWeight": {
-                "repCount": 10,
-                "completedDatedTime": "2023-03-23T12:00:00Z",
-                "weightKg": 75
-              }
-            }
-          }
-        },
-        "repCount": 12,
-        "weightKg": 40
-      },
-      {
-        "exercise": {
-          "exerciseName": "Barbell Lunge E/L",
-          "defaultRepCount": 12,
-          "userPerformance": {
-            "personalBestSet": {
-              "totalWeight": {
-                "repCount": 10,
-                "completedDatedTime": "2023-03-23T12:00:00Z",
-                "weightKg": 50
-              }
-            }
-          }
-        },
-        "repCount": 10,
-        "weightKg": 60
-      },
-      {
-        "exercise": {
-          "exerciseName": "Barbell Lunge E/L",
-          "defaultRepCount": 12,
-          "userPerformance": {
-            "personalBestSet": {
-              "totalWeight": {
-                "repCount": 10,
-                "completedDatedTime": "2023-03-23T12:00:00Z",
-                "weightKg": 75
-              }
-            }
-          }
-        },
-        "repCount": 8,
-        "weightKg": 70
-      }
     ],
+    "label": "Barbell Lunge E/L",
+    "isSuperSet": false,
     "totalVolumeKg": 300,
     "wasVolumePersonalBest": false
   },

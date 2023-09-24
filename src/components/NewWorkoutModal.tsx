@@ -1,8 +1,12 @@
-import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-const NewWorkoutModal = () => {
-  const [workoutModalOpen, setWorkoutModalOpen] = useState(false);
+type Props = {
+  workoutModalOpen: boolean;
+  setWorkoutModalOpen: (workoutModalOpen: boolean) => void;
+};
+
+const NewWorkoutModal = (props: Props) => {
+  const { workoutModalOpen, setWorkoutModalOpen } = props;
 
   const handleStartWorkout = (workoutType: number) => {
     switch (workoutType) {
@@ -32,14 +36,18 @@ const NewWorkoutModal = () => {
           <p>Pick a workout type</p>
         </Modal.Body>
 
-        <Button onClick={() => handleStartWorkout(1)} variant="secondary">
+        <Button onClick={() => handleStartWorkout(1)} variant="primary">
           Strength
         </Button>
-        <Button onClick={() => handleStartWorkout(2)} variant="secondary">
-          Strength
+        <Button
+          onClick={() => handleStartWorkout(2)}
+          variant="primary"
+          className="mt-1"
+        >
+          HIIT
         </Button>
       </Modal.Dialog>
-      <Button onClick={() => setWorkoutModalOpen(false)} variant="secondary">
+      <Button onClick={() => setWorkoutModalOpen(false)} variant="dark">
         Close
       </Button>
     </Modal>

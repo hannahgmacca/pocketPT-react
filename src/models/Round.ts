@@ -1,7 +1,14 @@
 import { Set } from "./Set";
-import { SuperSet } from "./SuperSet";
 
 export interface Round {
-  setList: Array<Set | SuperSet>;
-  Label: string;
+  setList: Set[][];
+  roundSetType: RoundSetType;
+}
+
+export enum RoundSetType {
+  singleSet = "Single Set",
+  superSet = "Super Set",
+  triSet = "Tri Set",
+  giantSet = "Giant Set",
+  hiitSet = "HIIT Set",
 }

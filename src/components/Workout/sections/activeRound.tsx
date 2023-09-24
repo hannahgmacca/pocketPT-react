@@ -1,23 +1,25 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { Round } from "../../../models/Round";
+import { Round, RoundSetType } from "../../../models/Round";
 import NumberInput from "../../NumberInput";
 import { Set } from "../../../models/Set";
-import { Exercise } from "../../../models/Exercise";
+import { getCharacterIndex } from "../../../common/scss/utilities/alphabet";
 
 type Props = {
   activeRound: Round;
   onUpdateRepCount: (
     setIndex: number,
+    setItemIndex: number,
     set: Set,
     newRepCount: number | undefined
   ) => void;
   onUpdateWeightValue: (
     setIndex: number,
+    setItemIndex: number,
     set: Set,
     newWeightValue: number | undefined
   ) => void;
   onCompleteRound: () => void;
-  onAddSet: (newExercise: Exercise) => void;
+  onAddSet: () => void;
 };
 
 const ActiveRound = (props: Props) => {
@@ -33,12 +35,26 @@ const ActiveRound = (props: Props) => {
     <Card className="active-round">
       <Container className="p-4 fw-medium text-center">
         <Row>
-          <Col>
+          <Col className="fw-bold text-start text-capitalize">
             <h5 className="fw-bold text-start text-capitalize">
-              {/* { typeof activeRound.setList == 'set'
-                ? "Super Set"
-                : activeRound.setList[0].exercise.exerciseName} */}
+              {activeRound.roundSetType === RoundSetType.singleSet
+                ? activeRound.setList[0][0].exercise.exerciseName
+                : activeRound.roundSetType}
             </h5>
+            {!(activeRound.roundSetType === RoundSetType.singleSet) && (
+              <p>
+                {activeRound.setList[0].map((setGroup, setGroupIndex) => {
+                  return (
+                    <span key={setGroupIndex}>
+                      {`${getCharacterIndex(setGroupIndex)}. ${
+                        setGroup.exercise.exerciseName
+                      } `}
+                      <br></br>
+                    </span>
+                  );
+                })}
+              </p>
+            )}
           </Col>
           {/* TODO */}
           <Col className="d-flex justify-content-end">
@@ -61,40 +77,63 @@ const ActiveRound = (props: Props) => {
           </Col>
         </Row>
 
-        {activeRound.setList.map((set, index) => {
+        {activeRound.setList.map((set, setIndex) => {
           return (
-            <>
-              <Row key={index} className="set-row p-1 mb-1 text-black">
-                <Col xs={2}>
-                  <span className="white bubble">{index + 1}</span>
-                </Col>
-                <Col xs={2}>
-                  <NumberInput
-                    value={set.repCount}
-                    onChange={(value?) => onUpdateRepCount(index, set, value)}
-                  ></NumberInput>
-                </Col>
-                <Col xs={1}>
-                  <span>x</span>
-                </Col>
-                <Col xs={3}>
-                  <NumberInput
-                    value={set.weightKg}
-                    onChange={(value?) =>
-                      onUpdateWeightValue(index, set, value)
-                    }
-                  ></NumberInput>
-                </Col>
-                <Col xs={4} className="text-white">
-                  10 x 40kg
-                </Col>
-              </Row>
-            </>
+            <div key={setIndex}>
+              {set.map((setItem, setItemIndex) => {
+                return (
+                  <Row
+                    key={setItemIndex}
+                    className="set-row p-1 mb-1 text-black"
+                  >
+                    <Col xs={2}>
+                      <span className="white bubble">
+                        {activeRound.roundSetType === RoundSetType.singleSet
+                          ? setIndex + 1
+                          : `${setIndex + 1}${getCharacterIndex(setItemIndex)}`}
+                      </span>
+                    </Col>
+                    <Col xs={2}>
+                      <NumberInput
+                        value={setItem.repCount}
+                        onChange={(value?) =>
+                          onUpdateRepCount(
+                            setIndex,
+                            setItemIndex,
+                            setItem,
+                            value
+                          )
+                        }
+                      ></NumberInput>
+                    </Col>
+                    <Col xs={1}>
+                      <span>x</span>
+                    </Col>
+                    <Col xs={3}>
+                      <NumberInput
+                        value={setItem.weightKg}
+                        onChange={(value?) =>
+                          onUpdateWeightValue(
+                            setIndex,
+                            setItemIndex,
+                            setItem,
+                            value
+                          )
+                        }
+                      ></NumberInput>
+                    </Col>
+                    <Col xs={4} className="text-white">
+                      10 x 40kg
+                    </Col>
+                  </Row>
+                );
+              })}
+            </div>
           );
         })}
         <Row>
           <Col>
-            <Button onClick={() => onAddSet}>Add Set</Button>
+            <Button onClick={() => onAddSet()}>Add Set</Button>
           </Col>
           <Col></Col>
           <Col>
