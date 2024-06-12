@@ -45,9 +45,9 @@ const BottomNavigation = () => {
           >
             <FontAwesomeIcon
               className="bg-white rounded-5"
-              size="4x"
+              size="3x"
               icon={faCirclePlus}
-              style={{ color: background, border: `${background} 1px solid` }}
+              style={{ color: background }}
             />
           </button>
         </Col>

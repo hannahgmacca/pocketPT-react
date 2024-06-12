@@ -17,7 +17,7 @@ const TopNavigation: React.FC = () => {
           </Link>
         </Col>
         <Col xs={8} className="d-flex justify-content-center">
-          <span className="fw-bold fs-3">{getWeekdayDate(today)}</span>
+          <span className="fw-bold fs-5">{getWeekdayDate(today)}</span>
         </Col>
         <Col xs={2} className="d-flex justify-content-center">
           <Link to="/">

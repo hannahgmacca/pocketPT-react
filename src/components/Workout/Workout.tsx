@@ -20,6 +20,10 @@ const Workout = () => {
 
   // const match = useRouteMatch<RouterParams>();
 
+  // has router params from /id?
+  // if yes then get workout from api
+  // if no then report error
+
   const onFirstLoad = useCallback(async (workoutId?: string) => {
     // if (!workoutId) {
     try {
