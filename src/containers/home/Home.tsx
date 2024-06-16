@@ -29,7 +29,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
+    <Container className='gx-2'>
       {!isLoading ? (
         <Container>
           <Row className="mt-5">

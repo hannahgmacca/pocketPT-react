@@ -8,6 +8,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import NewWorkoutModal from "./NewWorkoutModal";
+import { PlusCircle } from '@geist-ui/icons';
 
 const BottomNavigation = () => {
   const [workoutModalOpen, setWorkoutModalOpen] = useState(false);
@@ -27,7 +28,8 @@ const BottomNavigation = () => {
   };
 
   return (
-    <Navbar fixed="bottom" style={{ background: "#0a0c16" }}>
+    <Navbar fixed="bottom" style={{ background: "#000" }}>
+
       <Container fluid className="justify-content-between">
         <Col className="d-flex justify-content-center" xs={3}>
           <Link to="/">
@@ -43,12 +45,14 @@ const BottomNavigation = () => {
             className="bg-transparent border-0"
             onClick={() => setWorkoutModalOpen(true)}
           >
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               className="bg-white rounded-5"
               size="3x"
               icon={faCirclePlus}
               style={{ color: background }}
-            />
+            /> */}
+
+          <PlusCircle size='50' color={background}/>
           </button>
         </Col>
         <Col className="d-flex justify-content-center" xs={3}>

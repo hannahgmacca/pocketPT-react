@@ -23,6 +23,7 @@ const ExercisePicker = (props: Props) => {
           color: "black",
           textAlign: "left",
           textTransform: "capitalize",
+          fontSize: '12px'
         }),
         placeholder: (baseStyles) => ({
           ...baseStyles,

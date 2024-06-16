@@ -39,33 +39,34 @@ const NewWorkoutModal = (props: Props) => {
 
       <Modal.Body>
         <p>Pick a workout type</p>
-        <Row className="justify-content-between">
-          <Col xs={6}>
+        {/* <Row className="justify-content-between"> */}
+          {/* <Col xs={4}> */}
             <Button
               onClick={() => handleStartWorkout(1)}
               variant="primary"
-              className="w-100"
+              className='me-2'
+              // className="w-100"
             >
               Strength
             </Button>
-          </Col>
-          <Col xs={6}>
+          {/* </Col>
+          <Col xs={4}> */}
             <Button
               disabled
               onClick={() => handleStartWorkout(2)}
               variant="primary"
-              className="w-100"
+              // className="w-100"
             >
               HIIT
             </Button>
-          </Col>
-        </Row>
+          {/* </Col> */}
+        {/* </Row> */}
       </Modal.Body>
-      <Modal.Footer>
+      {/* <Modal.Footer>
         <Button onClick={() => setWorkoutModalOpen(false)} variant="dark">
           Close
         </Button>
-      </Modal.Footer>
+      </Modal.Footer> */}
     </Modal>
   );
 };

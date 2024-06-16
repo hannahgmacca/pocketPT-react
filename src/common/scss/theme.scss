@@ -9,6 +9,7 @@ input {
   border-color: transparent;
 }
 
+
 .white {
   display: inline-block;
   text-align: center;
@@ -32,9 +33,16 @@ input {
 
 // 2. Include any default variable overrides here
 // Common
-$body-bg: #0a0c16;
+$body-bg: #0a0a0a;
+// $body-bg: green; -- TESTING
+
+$body-bg-secondary: #000000;
 $body-color: white;
-$dark-rgb: #000;
+$border-color: #2e2e2e;
+
+
+// $dark-rgb: green;
+// $dark-rgb: #000;
 
 // Progress Bar
 $progress-height: 9px;
@@ -43,7 +51,7 @@ $progress-bg: #0d6efd;
 
 // Modal
 // $modal-content-bg: white;
-// $modal-backdrop-opacity: 80%;
+$modal-backdrop-opacity: 85%;
 // $modal-content-color: black;
 // $modal-content-border-color: white;
 

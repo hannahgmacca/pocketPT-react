@@ -107,7 +107,7 @@ const Workout = () => {
   return (
     <Container>
       <h1 className="pt-4">{workoutName}</h1>
-      <h5>{workoutType} workout</h5>
+      {/* <h5>{workoutType} workout</h5> */}
       {activeRound ? (
         <ActiveRound
           activeRound={activeRound}

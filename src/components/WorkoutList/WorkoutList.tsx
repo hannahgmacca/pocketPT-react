@@ -11,7 +11,7 @@ const WorkoutList = (props: PropsWithChildren<Props>) => {
   const { title, workoutList } = props;
 
   return (
-    <div>
+    <Container className='gx-0'>
       <Row>
         <h4 className="mb-3">{title}</h4>
       </Row>
@@ -19,7 +19,7 @@ const WorkoutList = (props: PropsWithChildren<Props>) => {
         workoutList.map((workout, i) => (
           <WorkoutListItem key={i} workoutItem={workout} />
         ))}
-    </div>
+    </Container>
   );
 };
 export default WorkoutList;
