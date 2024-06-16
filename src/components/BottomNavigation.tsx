@@ -8,7 +8,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import NewWorkoutModal from "./NewWorkoutModal";
-import { PlusCircle } from '@geist-ui/icons';
+import { Home, PlusCircle } from '@geist-ui/icons';
 
 const BottomNavigation = () => {
   const [workoutModalOpen, setWorkoutModalOpen] = useState(false);
@@ -28,16 +28,17 @@ const BottomNavigation = () => {
   };
 
   return (
-    <Navbar fixed="bottom" style={{ background: "#000" }}>
+    <Navbar fixed="bottom" className='pb-4' style={{ background: "#000" }}>
 
       <Container fluid className="justify-content-between">
         <Col className="d-flex justify-content-center" xs={3}>
           <Link to="/">
             <FontAwesomeIcon
-              size="2x"
+              size="lg"
               icon={faHouse}
               style={{ color: background }}
             />
+            {/* <Home size='30' color={background}/> */}
           </Link>
         </Col>
         <Col className="d-flex justify-content-center" xs={3}>
@@ -58,7 +59,7 @@ const BottomNavigation = () => {
         <Col className="d-flex justify-content-center" xs={3}>
           <Link to="profile">
             <FontAwesomeIcon
-              size="2x"
+              size="lg"
               icon={faUser}
               style={{ color: background }}
             />
