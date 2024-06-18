@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import { Set } from "../../models/Set";
 // import { useRouteMatch } from "react-router-dom";
 import { WorkoutActions } from "./state/workoutActions";
-import "./workout.scss";
+import "./_workout.scss";
 import { Exercise } from "../../models/Exercise";
 import ActiveRound from "./sections/activeRound";
 import NewRound from "./sections/newRound";
@@ -105,7 +105,7 @@ const Workout = () => {
   };
 
   return (
-    <Container>
+    <Container className='gx-2'>
       <h1 className="pt-4">{workoutName}</h1>
       {/* <h5>{workoutType} workout</h5> */}
       {activeRound ? (

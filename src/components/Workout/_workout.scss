@@ -1,0 +1,34 @@
+.new-round {
+  //background-color: #feb35a !important;
+}
+
+.set-row {
+  display: flex;
+  align-items: center;
+  border: 1px solid #2e2e2e;
+  color: white !important;
+}
+
+.active-round {
+  //background-color: #feb35a !important;
+
+  .set-row {
+    border-radius: 25px;
+  }
+
+  .set-row:nth-child(1n) {
+    //background-color: #b0d298;
+  }
+
+  .set-row:nth-child(2n) {
+    //ackground-color: #63b5ff;
+  }//
+}
+
+.complete-round {
+  //background-color: #b0d298;
+
+  div &.odd {
+    //background-color: #63b5ff;
+  }
+}

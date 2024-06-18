@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { Exercise } from "../../models/Exercise";
-import Select from "react-select";
+import Select, { StylesConfig } from "react-select";
 
 type Props = {
   selectedExercise: Exercise[] | undefined;
@@ -17,14 +16,40 @@ const ExercisePicker = (props: Props) => {
       value={selectedExercise}
       onChange={onChange}
       isMulti
+      theme={(theme) => ({
+        ...theme,
+        colors: {
+          ...theme.colors,
+          primary: '#2e2e2e',
+        },
+      })}
       styles={{
-        option: (baseStyles) => ({
+        menuList: (baseStyles) => ({
           ...baseStyles,
-          color: "black",
+          background: 'black',
+        }),
+        option: (baseStyles, state) => ({
+          ...baseStyles,
+          color: "white",
           textAlign: "left",
           textTransform: "capitalize",
-          fontSize: '12px'
+          fontSize: '12px',
+          background: state.isFocused ? '#242424' : '#0a0a0a',
         }),
+        container: (baseStyles, state) => ({
+          ...baseStyles,
+          background: '#0a0a0a',
+          borderColor: '#2e2e2e',
+          boxShadow: '#2e2e2e',
+
+        }),    
+        control: (baseStyles, state) => ({
+          ...baseStyles,
+          background: '#0a0a0a',
+          borderColor: '#2e2e2e',
+          boxShadow: '#2e2e2e',
+        }),
+
         placeholder: (baseStyles) => ({
           ...baseStyles,
           textAlign: "left",

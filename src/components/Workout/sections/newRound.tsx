@@ -1,8 +1,8 @@
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import SelectInput from "../../SelectInput";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Exercise } from "../../../models/Exercise";
 import ExercisePicker from "../../ExercisePicker/ExercisePicker";
+import Card from '../../Card/Card';
 
 type Props = {
   onAddRound: (newExercises: Exercise[]) => void;
@@ -55,7 +55,7 @@ const NewRound = (props: Props) => {
               suggestions={exerciseOptions}
               onChange={onUpdateExercise}
             ></ExercisePicker>
-            <Button className="mt-2" onClick={() => onStartRound()}>
+            <Button  variant="outline-secondary" className="mt-2" onClick={() => onStartRound()}>
               Start round
             </Button>
           </Col>

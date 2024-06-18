@@ -7,14 +7,15 @@
 input {
   width: 100%;
   border-color: transparent;
+  background: #0a0a0a;
+  color: white;
 }
-
 
 .white {
   display: inline-block;
   text-align: center;
-  background: white;
-  color: black;
+  //background: white;
+  //color: black;
 
   &.bubble {
     display: flex;
@@ -27,22 +28,18 @@ input {
   }
 
   &.rounded-rectangle {
-    border-radius: 15%;
+    border-radius: 0.375rem;
+    background: #FFFFFF0F;
+    border: 1px solid #2e2e2e;
   }
 }
 
 // 2. Include any default variable overrides here
 // Common
 $body-bg: #0a0a0a;
-// $body-bg: green; -- TESTING
-
 $body-bg-secondary: #000000;
 $body-color: white;
 $border-color: #2e2e2e;
-
-
-// $dark-rgb: green;
-// $dark-rgb: #000;
 
 // Progress Bar
 $progress-height: 9px;
@@ -55,9 +52,27 @@ $modal-backdrop-opacity: 85%;
 // $modal-content-color: black;
 // $modal-content-border-color: white;
 
+
 // Input
 $form-select-color: black;
 $form-select-bg: white;
+
+$theme-colors: (
+  "primary": #006EFE,
+  "secondary": #2e2e2e,
+);
+
+
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-warning,
+.btn-outline-info,
+.btn-outline-light,
+.btn-outline-dark {
+  color: #ffffff !important; // Replace with your desired text color
+}
 
 // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
 @import "../../../node_modules/bootstrap/scss/variables";
@@ -82,6 +97,7 @@ $form-select-bg: white;
 // 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
 // @import "../node_modules/bootstrap/scss/utilities/api";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/bootstrap/scss/buttons";
 
 // 8. Add additional custom code here
 

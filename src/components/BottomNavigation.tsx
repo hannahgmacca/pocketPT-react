@@ -29,7 +29,6 @@ const BottomNavigation = () => {
 
   return (
     <Navbar fixed="bottom" className='pb-4' style={{ background: "#000" }}>
-
       <Container fluid className="justify-content-between">
         <Col className="d-flex justify-content-center" xs={3}>
           <Link to="/">
@@ -38,7 +37,6 @@ const BottomNavigation = () => {
               icon={faHouse}
               style={{ color: background }}
             />
-            {/* <Home size='30' color={background}/> */}
           </Link>
         </Col>
         <Col className="d-flex justify-content-center" xs={3}>
@@ -46,13 +44,6 @@ const BottomNavigation = () => {
             className="bg-transparent border-0"
             onClick={() => setWorkoutModalOpen(true)}
           >
-            {/* <FontAwesomeIcon
-              className="bg-white rounded-5"
-              size="3x"
-              icon={faCirclePlus}
-              style={{ color: background }}
-            /> */}
-
           <PlusCircle size='50' color={background}/>
           </button>
         </Col>

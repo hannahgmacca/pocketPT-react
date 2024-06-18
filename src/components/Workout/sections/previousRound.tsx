@@ -1,9 +1,10 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Round, RoundSetType } from "../../../models/Round";
-import Card from "../../Card/Card";
-import { getCharacterIndex } from "../../../common/scss/utilities/alphabet";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Round, RoundSetType } from '../../../models/Round';
+import Card from '../../Card/Card';
+import { getCharacterIndex } from '../../../common/scss/utilities/alphabet';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import NumberInput from '../../NumberInput';
 
 type Props = {
   index: number;
@@ -14,11 +15,11 @@ type Props = {
 const PreviousRound = (props: Props) => {
   const { index, round, onEditRound } = props;
   return (
-    <Card className={`complete-round ${index % 2 === 0 && "odd"}`}>
-      <Container className="p-4 fw-medium text-center">
+    <Card className={`complete-round ps-3 ${index % 2 === 0 && 'odd'}`}>
+      <Container className='p-4 fw-medium text-center'>
         <Row>
-          <Col className="fw-bold text-start text-capitalize">
-            <h5 className="fw-bold text-start text-capitalize">
+          <Col className='text-start text-capitalize'>
+            <h5 className='fw-bold text-start text-capitalize'>
               {round.roundSetType === RoundSetType.singleSet
                 ? round.setList[0][0].exercise.exerciseName
                 : round.roundSetType}
@@ -29,9 +30,7 @@ const PreviousRound = (props: Props) => {
                 {round.setList[0].map((setGroup, setGroupIndex) => {
                   return (
                     <span key={setGroupIndex}>
-                      {`${getCharacterIndex(index)}. ${
-                        setGroup.exercise.exerciseName
-                      } `}
+                      {`${getCharacterIndex(index)}. ${setGroup.exercise.exerciseName} `}
                       <br></br>
                     </span>
                   );
@@ -39,37 +38,37 @@ const PreviousRound = (props: Props) => {
               </p>
             )}
           </Col>
-          <Col className="d-flex justify-content-end">
-            <Button onClick={() => onEditRound(index)}>
-              <FontAwesomeIcon icon={faEdit} />
-            </Button>
+          <Col className='d-flex justify-content-end'>
+            <div>
+              <Button variant='outline-secondary' onClick={() => onEditRound(index)}>
+                <FontAwesomeIcon icon={faEdit} />
+              </Button>
+            </div>
           </Col>
         </Row>
         <Row>
-          <Col xs={10}>
+          <Col xs={11}>
             {round.setList.map((set, setIndex) => {
               return (
                 <div key={setIndex}>
                   {set.map((setItem, setItemIndex) => {
                     return (
-                      <Row key={setItemIndex} className="p-1">
+                      <Row key={setItemIndex} className='p-1'>
                         <Col xs={2}>
-                          <span className="white bubble">
+                          <span className='white bubble'>
                             {round.roundSetType === RoundSetType.singleSet
                               ? setIndex + 1
-                              : `${setIndex + 1}${getCharacterIndex(
-                                  setItemIndex
-                                )}`}
+                              : `${setIndex + 1}${getCharacterIndex(setItemIndex)}`}
                           </span>
                         </Col>
-                        <Col xs={2}>
-                          <span>{setItem.repCount}</span>
+                        <Col xs={4}>
+                          <NumberInput value={setItem.repCount} disabled />
                         </Col>
-                        <Col xs={1}>
-                          <span>{"x"}</span>
+                        <Col xs={1} className='d-flex justify-content-center'>
+                          <span>{'x'}</span>
                         </Col>
-                        <Col xs={2}>
-                          <span>{setItem.weightKg}</span>
+                        <Col xs={4}>
+                          <NumberInput value={setItem.weightKg} disabled />
                         </Col>
                       </Row>
                     );
@@ -78,7 +77,6 @@ const PreviousRound = (props: Props) => {
               );
             })}
           </Col>
-          <Col xs={2}></Col>
         </Row>
       </Container>
     </Card>

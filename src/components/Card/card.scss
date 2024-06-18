@@ -1,17 +1,38 @@
+@import "../../common/scss/theme.scss";
+
 .card {
   margin-top: 7px;
-  margin-bottom: 7px;
+  margin-bottom: 15px;
   border-radius: 15px;
-  min-height: 175px;
+  // min-height: 175px;
   min-width: 200px;
-  background: #b0d298;
+  background: $body-bg;
+  border: $border-color solid;
   text-wrap: nowrap;
 
   &.carousel {
     max-width: 300px;
 
     &.active {
-      background-color: #3580ff;
     }
+  }
+
+  .ribbon {
+    //background-color: #ED9A00;
+    height: 100%;
+    width: 15px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+
+  .ribbon:nth-child(1n) {
+    background-color: #ED9A00;
+  }
+
+  .ribbon:nth-child(2n) {
+    background-color: #63b5ff;
   }
 }

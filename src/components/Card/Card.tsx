@@ -8,7 +8,8 @@ const Card = (props: PropsWithChildren<Props>) => {
 
   return (
     <div className={`card ${isCarousel && "carousel"} ${className}`}>
-      {children}
+      <div className='ribbon'></div>
+        {children}
     </div>
   );
 };
