@@ -19,11 +19,11 @@ const WorkoutCarouselCard = (props: PropsWithChildren<Props>) => {
       <Row className="pe-3">
         <Col xs={6}></Col>
         <Col xs={6}>
-          <Row>
+          {/* <Row>
             <Col xs={7}>Progress </Col>
             <Col xs={5}>{progress}%</Col>
           </Row>
-          {isActive && <ProgressBar style={{ height: "9px" }} now={progress} />}
+          {isActive && <ProgressBar style={{ height: "9px" }} now={progress} />} */}
         </Col>
       </Row>
     </Card>

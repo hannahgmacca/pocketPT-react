@@ -20,7 +20,7 @@ const ActiveRound = (props: Props) => {
     <Card className='active-round ps-3'>
       <Container className='p-4 fw-medium text-center'>
         <Row>
-          <Col className='text-start text-capitalize'>
+          <Col className='text-start text-capitalize mb-2'>
             <h5 className='fw-bold text-start text-capitalize'>
               {activeRound.roundSetType === RoundSetType.singleSet
                 ? activeRound.setList[0][0].exercise.exerciseName

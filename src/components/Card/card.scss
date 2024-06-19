@@ -4,7 +4,6 @@
   margin-top: 7px;
   margin-bottom: 15px;
   border-radius: 15px;
-  // min-height: 175px;
   min-width: 200px;
   background: $body-bg;
   border: $border-color solid;
@@ -14,11 +13,12 @@
     max-width: 300px;
 
     &.active {
+      background-color: #006EFE;
+
     }
   }
 
   .ribbon {
-    //background-color: #ED9A00;
     height: 100%;
     width: 15px;
     position: absolute;
@@ -27,12 +27,24 @@
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
   }
+}
 
-  .ribbon:nth-child(1n) {
-    background-color: #ED9A00;
-  }
+.card:nth-child(1n) .ribbon {
+  background-color: #ED9A00;
+}
 
-  .ribbon:nth-child(2n) {
-    background-color: #63b5ff;
-  }
+.card:nth-child(2n) .ribbon  {
+  background-color: #63b5ff;
+}
+
+.card:nth-child(3n) .ribbon  {
+  background-color: #00AC3A;
+}
+
+.card:nth-child(4n) .ribbon  {
+  background-color: #9440D5;
+}
+
+.card:nth-child(5n) .ribbon  {
+  background-color: #00A995;
 }

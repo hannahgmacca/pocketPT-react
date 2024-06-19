@@ -48,7 +48,7 @@ const NewRound = (props: Props) => {
     <Card className="new-round">
       <Container className="p-4 fw-medium text-center">
         <Row>
-          <Col>
+          <Col className="mb-2">
             <h5 className="fw-bold text-start">{"Select Exercises"}</h5>
             <ExercisePicker
               selectedExercise={selectedExercise}

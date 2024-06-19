@@ -18,7 +18,7 @@ const PreviousRound = (props: Props) => {
     <Card className={`complete-round ps-3 ${index % 2 === 0 && 'odd'}`}>
       <Container className='p-4 fw-medium text-center'>
         <Row>
-          <Col className='text-start text-capitalize'>
+          <Col className='text-start text-capitalize mb-3'>
             <h5 className='fw-bold text-start text-capitalize'>
               {round.roundSetType === RoundSetType.singleSet
                 ? round.setList[0][0].exercise.exerciseName
@@ -53,7 +53,7 @@ const PreviousRound = (props: Props) => {
                 <div key={setIndex}>
                   {set.map((setItem, setItemIndex) => {
                     return (
-                      <Row key={setItemIndex} className='p-1'>
+                      <Row key={setItemIndex} className='set-row p-1'>
                         <Col xs={2}>
                           <span className='white bubble'>
                             {round.roundSetType === RoundSetType.singleSet

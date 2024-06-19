@@ -87,7 +87,7 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
         const weightKg =
           activeRound.setList.length > 1
             ? setItem.weightKg
-            : setItem.exercise.defaultRepCount;
+            : setItem.exercise.defaultWeight;
 
         return {
           exercise: setItem.exercise,
