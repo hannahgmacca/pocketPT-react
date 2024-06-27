@@ -14,6 +14,7 @@ export enum WorkoutActionList {
   UPDATE_SET = "UPDATE_SET",
   SET_WORKOUT = "SET_WORKOUT",
   EDIT_ROUND = "EDIT_ROUND",
+  COMPLETE_WORKOUT = "COMPLETE_WORKOUT"
 }
 
 export type WorkoutActionNames = ActionNames<typeof WorkoutActionList>;
@@ -37,6 +38,9 @@ export const WorkoutActions = {
 
   editRound: (payload: { roundIndex: number }) =>
     createAction(WorkoutActionList.EDIT_ROUND, payload),
+
+  completeWorkout: () =>
+    createAction(WorkoutActionList.COMPLETE_WORKOUT),
 };
 
 export type WorkoutActionsUnion = ActionsUnion<typeof WorkoutActions>;

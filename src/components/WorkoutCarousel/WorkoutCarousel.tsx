@@ -14,7 +14,7 @@ const WorkoutCarousel = (props: Props) => {
     (workoutType: string) => {
       if (
         !activeWorkout ||
-        activeWorkout.workoutType.toString() !== workoutType
+        activeWorkout.workoutType?.toString() !== workoutType
       ) {
         return 0;
       }

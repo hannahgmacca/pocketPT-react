@@ -12,6 +12,8 @@ const ExercisePicker = (props: Props) => {
 
   return (
     <Select
+      getOptionLabel={(item) => item.exerciseName}
+      getOptionValue={(item) => item._id}
       options={suggestions}
       value={selectedExercise}
       onChange={onChange}

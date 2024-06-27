@@ -1,7 +1,8 @@
 import { Round } from "./Round";
 
 export interface Workout {
-  workoutId: number;
+  _id: string;
+  userId: string;
   workoutName: string;
   workoutType: WorkoutType;
   completedRoundList: Round[];
@@ -13,7 +14,7 @@ export interface Workout {
 }
 
 export interface WorkoutShort {
-  workoutId: number;
+  _id: number;
   workoutName: string;
   workoutType: WorkoutType;
   caloriesBurnt: number;
@@ -21,7 +22,8 @@ export interface WorkoutShort {
 }
 
 export enum WorkoutType {
-  strength,
-  cardio,
-  hiit,
+  strength = 'strength',
+  cardio = 'cardio',
+  hiit = 'hiit',
 }
+

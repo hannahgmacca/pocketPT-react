@@ -4,14 +4,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
+import { AppProvider } from './state/AppContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <Router>
-    <App />
-  </Router>
+  <AppProvider>
+    <Router>
+      <App />
+    </Router>
+  </AppProvider>
 );
 
 // If you want your app to work offline and load faster, you can change

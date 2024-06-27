@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
-import { Container, Row } from "react-bootstrap";
-import WorkoutCarousel from "../../components/WorkoutCarousel/WorkoutCarousel";
-import WorkoutList from "../../components/WorkoutList/WorkoutList";
-import { Workout, WorkoutShort } from "../../models/Workout";
+import { useContext, useEffect, useState } from 'react';
+import { Container, Row } from 'react-bootstrap';
+import WorkoutCarousel from '../../components/WorkoutCarousel/WorkoutCarousel';
+import WorkoutList from '../../components/WorkoutList/WorkoutList';
+import { Workout, WorkoutShort } from '../../models/Workout';
+import { AppContext } from '../../state/AppContext';
+import APIClient from '../../apis/APIClient';
+import WorkoutAPI from '../../apis/WorkoutAPI';
 
 interface indexViewModel {
   activeWorkout: Workout;
@@ -10,39 +13,39 @@ interface indexViewModel {
 }
 
 const Home = () => {
-  const [indexViewModel, setIndexViewModel] = useState({} as indexViewModel);
+  const [previousWorkouts, setPreviousWorkouts] = useState([] as WorkoutShort[]);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useContext(AppContext);
+
+  const apiClient = new APIClient();
+  const workoutClient = new WorkoutAPI(apiClient);
 
   useEffect(() => {
-    setIsLoading(true);
-    //TODO Refactor fetch into user client
-    fetch("/data/index.json", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => setIndexViewModel(response));
-
-    setIsLoading(false);
+    getPreviousWorkouts();
   }, []);
+
+  const getPreviousWorkouts = async () => {
+    try {
+      setIsLoading(true);
+      const previousWorkouts = await workoutClient.getAllWorkouts();
+      setPreviousWorkouts(previousWorkouts);
+    } catch {
+      // catch here
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Container className='gx-2'>
       {!isLoading ? (
         <Container>
-          <Row className="mt-5">
-            <h1 className="fw-bold">Time to get</h1>
-            <h1 className="fw-bold">active!</h1>
+          <Row className='mt-5'>
+            <h1 className='fw-bold'>Time to get</h1>
+            <h1 className='fw-bold'>active {user?.firstName}!</h1>
           </Row>
-          <WorkoutCarousel
-            activeWorkout={indexViewModel.activeWorkout}
-          ></WorkoutCarousel>
-          <WorkoutList
-            title="Previous Workouts"
-            workoutList={indexViewModel.completedWorkouts}
-          ></WorkoutList>{" "}
+          {user?.activeWorkout && <WorkoutCarousel activeWorkout={user.activeWorkout}></WorkoutCarousel>}
+          <WorkoutList title='Previous Workouts' workoutList={previousWorkouts}></WorkoutList>{' '}
         </Container>
       ) : (
         <div>Loading...</div>

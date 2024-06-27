@@ -1,56 +1,79 @@
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import WorkoutReducer, { initialWorkoutState } from "./state/workoutReducer";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Set } from "../../models/Set";
 // import { useRouteMatch } from "react-router-dom";
-import { WorkoutActions } from "./state/workoutActions";
+import { WorkoutActionList, WorkoutActions } from "./state/workoutActions";
 import "./_workout.scss";
 import { Exercise } from "../../models/Exercise";
 import ActiveRound from "./sections/activeRound";
 import NewRound from "./sections/newRound";
 import PreviousRound from "./sections/previousRound";
+import APIClient from '../../apis/APIClient';
+import WorkoutAPI from '../../apis/WorkoutAPI';
+import { WorkoutType } from '../../models/Workout';
+import { useNavigate } from 'react-router-dom';
+import ExerciseAPI from '../../apis/ExercisePickerAPI';
 
-// interface RouterParams {
-//   workoutId: string;
-// }
+interface RouterParams {
+  workoutId: string;
+  workoutType: WorkoutType
+}
 
 const Workout = () => {
   const [state, dispatch] = useReducer(WorkoutReducer, initialWorkoutState);
-  const { activeRound, workoutName, completedRoundList, workoutType } = state;
+  const { activeRound, workoutName, completedRoundList, completedDateTime} = state;
+  const navigate = useNavigate();
 
-  // const match = useRouteMatch<RouterParams>();
+  const apiClient = new APIClient();
+  const workoutClient = new WorkoutAPI(apiClient);
+  const exerciseClient = new ExerciseAPI(apiClient);
 
-  // has router params from /id?
-  // if yes then get workout from api
-  // if no then report error
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (state._id) {
+      workoutClient.updateWorkout(state._id, state);
+
+      if (completedDateTime) {
+        navigate('/');
+      }
+    }
+  }, [activeRound, completedDateTime])
+
+  useEffect(() => {
+    
+  })
 
   const onFirstLoad = useCallback(async (workoutId?: string) => {
-    // if (!workoutId) {
     try {
-      fetch("/data/updateWorkout.json", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((response) =>
-          dispatch(WorkoutActions.setWorkout(response.workout))
-        );
+      setLoading(true);
 
-      //setIsLoading(false);
+      if (workoutId) {
+        // get workout by ID
+        const workout = await workoutClient.getWorkoutById(workoutId);
+        dispatch(WorkoutActions.setWorkout(workout));
+      } else {
+        const newWorkout = await workoutClient.addWorkout(state);
+        dispatch(WorkoutActions.setWorkout(newWorkout));
+      }
+
+      const exerciseSuggestions = await exerciseClient.getAllExercises();
+      setExercises(exerciseSuggestions);
+
     } catch (err) {
       //handleError(err);
+    } finally {
+      setLoading(false);
     }
-    // } else {
-    // }
   }, []);
 
   useEffect(() => {
-    if (!state.workoutId) {
+    if (!state._id) {
       onFirstLoad();
     }
-  }, [onFirstLoad, state.workoutId]);
+  }, [onFirstLoad, state._id]);
 
   const onUpdateRepCount = useCallback(
     (
@@ -104,6 +127,10 @@ const Workout = () => {
     dispatch(WorkoutActions.editRound({ roundIndex }));
   };
 
+  const onCompleteWorkout = () => {
+    dispatch(WorkoutActions.completeWorkout());
+  }
+
   return (
     <Container className='gx-2'>
       <h1 className="pt-4">{workoutName}</h1>
@@ -117,7 +144,7 @@ const Workout = () => {
           onAddSet={onAddSet}
         />
       ) : (
-        <NewRound onAddRound={onAddRound} />
+        <NewRound exercises={exercises} onAddRound={onAddRound} />
       )}
 
       {completedRoundList.map((round, roundIndex) => {
@@ -130,6 +157,7 @@ const Workout = () => {
           ></PreviousRound>
         );
       })}
+      <Button className='w-100' variant='outline-primary' onClick={() => onCompleteWorkout()}>Finish</Button>
     </Container>
   );
 };
