@@ -11,7 +11,7 @@ class APIClient {
   private baseURL: string;
 
   constructor() {
-    this.baseURL = process.env.PUBLIC_URL;
+    this.baseURL = process.env.API_URL || '';
   }
 
   private async request<T>(
