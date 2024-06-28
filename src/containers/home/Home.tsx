@@ -40,11 +40,11 @@ const Home = () => {
     <Container className='gx-2'>
       {!isLoading ? (
         <Container>
-          <Row className='mt-5'>
-            <h1 className='fw-bold'>Time to get</h1>
-            <h1 className='fw-bold'>active {user?.firstName}!</h1>
+          <Row className='mt-5 mb-3'>
+            <h3 className='fw-bold'>Time to get</h3>
+            <h3 className='fw-bold'>active {user?.firstName}!</h3>
           </Row>
-          {user?.activeWorkout && <WorkoutCarousel activeWorkout={user.activeWorkout}></WorkoutCarousel>}
+          {user && <WorkoutCarousel activeWorkoutId={user.activeWorkout}></WorkoutCarousel>}
           <WorkoutList title='Previous Workouts' workoutList={previousWorkouts}></WorkoutList>{' '}
         </Container>
       ) : (

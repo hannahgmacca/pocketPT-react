@@ -1,13 +1,14 @@
-import { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useReducer, useState } from 'react';
 import User from '../models/User';
 import APIClient from '../apis/APIClient';
 import UserAPI from '../apis/UserAPI';
+import { useWorkout } from './workout/workoutHook';
 
 const initialAppState = {
     user: null as User | null,
     token: '' as string | null,
     setToken: (_token: string | null) => {},
-    setUser: (_user: User | null) => {}
+    setUser: (_user: User | null) => {},
 }
 
 export const AppContext = createContext(initialAppState);

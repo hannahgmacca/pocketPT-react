@@ -12,7 +12,7 @@ class APIClient {
   // private onAuthFailure: () => void;
 
   constructor() {
-    this.baseURL = 'https://pocketpt-express-api.vercel.app/api/v1';
+    this.baseURL = 'http://localhost:3000/api/v1';
     // this.onAuthFailure = onAuthFailure;
   }
 

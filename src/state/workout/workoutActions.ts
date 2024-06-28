@@ -2,10 +2,10 @@ import {
   ActionNames,
   ActionsUnion,
   createAction,
-} from "../../../hooks-store/action-factory";
-import { Set } from "../../../models/Set";
-import { Exercise } from "../../../models/Exercise";
-import { Workout } from "../../../models/Workout";
+} from "../../hooks-store/action-factory";
+import { Set } from "../../models/Set";
+import { Exercise } from "../../models/Exercise";
+import { Workout } from "../../models/Workout";
 
 export enum WorkoutActionList {
   ADD_SET = "ADD_SET",

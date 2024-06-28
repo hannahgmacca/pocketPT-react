@@ -5,18 +5,19 @@ import BottomNavigation from './components/BottomNavigation';
 import TopNavigation from './components/TopNavigation';
 import LoginPage from './containers/auth/Login';
 import { AppContext } from './state/AppContext';
+import { Spinner } from 'react-bootstrap';
 const Home = lazy(() => import('./containers/home/Home'));
 const WorkoutPage = lazy(() => import('./containers/workout/WorkoutPage'));
 
 const App: React.FC = () => {
-  const { user, token } = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
   if (user) {
     return (
-      <Suspense fallback={<div>...Loading</div>}>
+      <Suspense fallback={<Spinner></Spinner>}>
         <TopNavigation />
         <Routes>
-          <Route path='/workout' element={<WorkoutPage />}></Route>
+          <Route path='/workout/:workoutId' element={<WorkoutPage />}></Route>
           <Route path='/' element={<Home />}></Route>
         </Routes>
         <BottomNavigation />

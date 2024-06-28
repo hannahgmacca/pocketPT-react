@@ -47,16 +47,13 @@ const ActiveRound = (props: Props) => {
         </Row>
 
         <Row className='fw-bold'>
-          <Col xs={2}></Col>
-          <Col xs={2} className='g-0'>
+          <Col xs={3}></Col>
+          <Col xs={4} className='g-0'>
             <span>Reps</span>
           </Col>
           <Col xs={1}></Col>
-          <Col xs={3}>
-            <span>Kg</span>
-          </Col>
           <Col xs={4}>
-            <span>Previous</span>
+            <span>Kg</span>
           </Col>
         </Row>
 

@@ -1,5 +1,11 @@
+import { useContext } from 'react';
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from '../state/AppContext';
+import APIClient from '../apis/APIClient';
+import WorkoutAPI from '../apis/WorkoutAPI';
+import { initialWorkoutState } from '../state/workout/workoutReducer';
+import { WorkoutType } from '../models/Workout';
 
 type Props = {
   workoutModalOpen: boolean;
@@ -8,22 +14,27 @@ type Props = {
 
 const NewWorkoutModal = (props: Props) => {
   const { workoutModalOpen, setWorkoutModalOpen } = props;
+
   const navigate = useNavigate();
 
-  const handleStartWorkout = (workoutType: number) => {
+  const apiClient = new APIClient();
+  const workoutClient = new WorkoutAPI(apiClient);
+
+  const handleStartWorkout = async (workoutType: number) => {
     setWorkoutModalOpen(false);
+    const intialWorkout = initialWorkoutState;
+
     switch (workoutType) {
       case 1:
-        navigate(`/workout?workoutType=strength`);
-        // post to api to initiate new workout
-        // if success, navigate to /workout
-        return;
+        intialWorkout.workoutType = WorkoutType.strength;
+        break;
       case 2:
-        navigate(`/workout?workoutType=hiit`);
-        // post to api to initiate new workout
-        // if success, navigate to /workout
-        return;
+        intialWorkout.workoutType = WorkoutType.cardio;
+        break;
     }
+
+    const newWorkout = await workoutClient.addWorkout(intialWorkout);
+    navigate(`/workout/${newWorkout._id}`);
   };
 
   return (
@@ -32,41 +43,27 @@ const NewWorkoutModal = (props: Props) => {
       onHide={() => setWorkoutModalOpen(false)}
       centered
     >
-      {/* <Modal.Dialog> */}
       <Modal.Header closeButton>
         <Modal.Title>Start a new workout</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <p>Pick a workout type</p>
-        {/* <Row className="justify-content-between"> */}
-          {/* <Col xs={4}> */}
             <Button
-              onClick={() => handleStartWorkout(1)}
+              onClick={async () => await handleStartWorkout(1)}
               variant="primary"
               className='me-2'
-              // className="w-100"
             >
               Strength
             </Button>
-          {/* </Col>
-          <Col xs={4}> */}
             <Button
               disabled
-              onClick={() => handleStartWorkout(2)}
+              onClick={async () => await handleStartWorkout(2)}
               variant="primary"
-              // className="w-100"
             >
               HIIT
             </Button>
-          {/* </Col> */}
-        {/* </Row> */}
       </Modal.Body>
-      {/* <Modal.Footer>
-        <Button onClick={() => setWorkoutModalOpen(false)} variant="dark">
-          Close
-        </Button>
-      </Modal.Footer> */}
     </Modal>
   );
 };

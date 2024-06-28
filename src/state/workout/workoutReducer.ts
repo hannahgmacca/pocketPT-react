@@ -1,8 +1,8 @@
-import { Handlers, createReducer } from '../../../hooks-store/action-factory';
-import { Exercise } from '../../../models/Exercise';
-import { Round, RoundSetType } from '../../../models/Round';
-import { Set } from '../../../models/Set';
-import { Workout, WorkoutType } from '../../../models/Workout';
+import { Handlers, createReducer } from '../../hooks-store/action-factory';
+import { Exercise } from '../../models/Exercise';
+import { Round, RoundSetType } from '../../models/Round';
+import { Set } from '../../models/Set';
+import { Workout, WorkoutType } from '../../models/Workout';
 import { WorkoutAction, WorkoutActionList, WorkoutActionNames, WorkoutActionsUnion } from './workoutActions';
 
 export const initialWorkoutState = {
