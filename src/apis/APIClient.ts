@@ -11,7 +11,7 @@ class APIClient {
   private baseURL: string;
 
   constructor() {
-    this.baseURL = process.env.API_URL || '';
+    this.baseURL = process.env.REACT_APP_API_URL || '';
   }
 
   private async request<T>(
@@ -22,7 +22,7 @@ class APIClient {
   ): Promise<T> {
     // Convert params object to a query string
     const queryString = params ? '?' + objectToQueryString(params) : '';
-
+    
     // Retrieve the userToken from AsyncStorage
     const userToken = localStorage.getItem('token');
 
