@@ -30,3 +30,17 @@ export enum equipmentType {
   dumbell = 'dumbell',
   stetchBand = 'stretchBand'
 }
+
+const exerciseFilter = {
+  barbell: 1,
+  dumbell: 2,
+  machine: 3,
+  stretchBand: 4,
+  upper: 5,
+  upperPush: 6,
+  upperPull: 7,
+  lower: 8,
+  lowerPush: 9,
+  lowerPull: 10
+};
+

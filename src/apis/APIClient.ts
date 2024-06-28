@@ -9,11 +9,9 @@ function objectToQueryString(obj: any) {
 
 class APIClient {
   private baseURL: string;
-  // private onAuthFailure: () => void;
 
   constructor() {
-    this.baseURL = 'http://localhost:3000/api/v1';
-    // this.onAuthFailure = onAuthFailure;
+    this.baseURL = process.env.PUBLIC_URL;
   }
 
   private async request<T>(
