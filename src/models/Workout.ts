@@ -14,7 +14,7 @@ export interface Workout {
 }
 
 export interface WorkoutShort {
-  _id: number;
+  _id: string;
   workoutName: string;
   workoutType: WorkoutType;
   caloriesBurnt: number;

@@ -35,6 +35,7 @@ export const AppProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    console.log(token)
     if (token) {
         fetchUser();
     }

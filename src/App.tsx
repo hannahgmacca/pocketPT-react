@@ -16,10 +16,12 @@ const App: React.FC = () => {
     return (
       <Suspense fallback={<Spinner></Spinner>}>
         <TopNavigation />
+        <div style={{ marginBottom: '200px'}}>
         <Routes>
           <Route path='/workout/:workoutId' element={<WorkoutPage />}></Route>
           <Route path='/' element={<Home />}></Route>
         </Routes>
+        </div>
         <BottomNavigation />
       </Suspense>
     );

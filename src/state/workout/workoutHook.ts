@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useReducer, useState } from 'react'
 import WorkoutReducer, { initialWorkoutState } from './workoutReducer';
 import { WorkoutActions } from './workoutActions';
 import { Workout } from '../../models/Workout';
-import { Set } from "../../models/Set";
+import { Set } from '../../models/Set';
 import APIClient from '../../apis/APIClient';
 import WorkoutAPI from '../../apis/WorkoutAPI';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,19 +11,21 @@ import ExerciseAPI from '../../apis/ExercisePickerAPI';
 import { AppContext } from '../AppContext';
 
 export interface WorkoutHook {
-    state: Workout;
-    loading: boolean;
-    exercises: Exercise[];
-    onFirstLoad: () => {};
-    onUpdateRepCount: (setIndex: number, setItemIndex: number, set: Set, newRepCount: number | undefined) => void;
-    onUpdateWeightValue: (setIndex: number, setItemIndex: number, set: Set, newWeightValue: number | undefined) => void;
-    onCompleteRound: () => void;
-    onAddSet: () => void;
-    onAddRound: (roundExercises: Exercise[]) => void;
-    onEditRound: (roundIndex: number) => void;
-    onCompleteWorkout: () => void;
-    setWorkout: (workout: Workout) => void;
-    setWorkoutName: (workoutName: string) => void
+  state: Workout;
+  loading: boolean;
+  exercises: Exercise[];
+  onFirstLoad: () => {};
+  onUpdateRepCount: (setIndex: number, setItemIndex: number, set: Set, newRepCount: number | undefined) => void;
+  onUpdateWeightValue: (setIndex: number, setItemIndex: number, set: Set, newWeightValue: number | undefined) => void;
+  onCompleteRound: () => void;
+  onDeleteRound: (roundIndex: number) => void;
+  onDeleteSet: (setIndex: number, setItemIndex: number) => void;
+  onAddSet: () => void;
+  onAddRound: (roundExercises: Exercise[]) => void;
+  onEditRound: (roundIndex: number) => void;
+  onCompleteWorkout: () => void;
+  setWorkout: (workout: Workout) => void;
+  setWorkoutName: (workoutName: string) => void;
 }
 
 export const useWorkout = (): WorkoutHook => {
@@ -53,7 +55,7 @@ export const useWorkout = (): WorkoutHook => {
         const newWorkout = await workoutClient.addWorkout(state);
         dispatch(WorkoutActions.setWorkout(newWorkout));
       }
-    
+
       const exerciseSuggestions = await exerciseClient.getAllExercises();
       setExercises(exerciseSuggestions);
     } catch (err) {
@@ -123,10 +125,10 @@ export const useWorkout = (): WorkoutHook => {
   const onCompleteWorkout = () => {
     dispatch(WorkoutActions.completeWorkout());
     if (user) {
-        setUser({
-            ...user, 
-            activeWorkout: null
-        })
+      setUser({
+        ...user,
+        activeWorkout: null,
+      });
     }
   };
 
@@ -135,9 +137,16 @@ export const useWorkout = (): WorkoutHook => {
   };
 
   const setWorkoutName = (workoutName: string) => {
-    dispatch(WorkoutActions.setWorkout({...state, workoutName}));
+    dispatch(WorkoutActions.setWorkout({ ...state, workoutName }));
   };
 
+  const onDeleteRound = (roundIndex: number) => {
+    dispatch(WorkoutActions.deleteRound({ roundIndex }));
+  };
+
+  const onDeleteSet = (setIndex: number, setItemIndex: number) => {
+    dispatch(WorkoutActions.deleteSet({ setIndex, setItemIndex }));
+  };
   return {
     state,
     loading,
@@ -146,11 +155,13 @@ export const useWorkout = (): WorkoutHook => {
     onUpdateRepCount,
     onUpdateWeightValue,
     onCompleteRound,
+    onDeleteRound,
+    onDeleteSet,
     onAddSet,
     onAddRound,
     onEditRound,
     onCompleteWorkout,
     setWorkout,
-    setWorkoutName
+    setWorkoutName,
   };
 };

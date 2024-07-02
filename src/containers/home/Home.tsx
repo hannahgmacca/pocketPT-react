@@ -30,9 +30,18 @@ const Home = () => {
       const previousWorkouts = await workoutClient.getAllWorkouts();
       setPreviousWorkouts(previousWorkouts);
     } catch {
-      // catch here
+      alert('There was an error getting previous workouts.')
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (workoutId: string) => {
+    try {
+      await workoutClient.deleteWorkout(workoutId);
+      await getPreviousWorkouts();
+    } catch {
+      alert('There was an error')
     }
   };
 
@@ -45,7 +54,7 @@ const Home = () => {
             <h3 className='fw-bold'>active {user?.firstName}!</h3>
           </Row>
           {user && <WorkoutCarousel activeWorkoutId={user.activeWorkout}></WorkoutCarousel>}
-          <WorkoutList title='Previous Workouts' workoutList={previousWorkouts}></WorkoutList>{' '}
+          <WorkoutList title='Previous Workouts' workoutList={previousWorkouts} handleDelete={handleDelete}></WorkoutList>{' '}
         </Container>
       ) : (
         <div>Loading...</div>

@@ -4,17 +4,22 @@ import NumberInput from '../../NumberInput';
 import { Set } from '../../../models/Set';
 import { getCharacterIndex } from '../../../common/scss/utilities/alphabet';
 import Card from '../../Card/Card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   activeRound: Round;
+  onDeleteRound: (roundIndex: number) => void;
   onUpdateRepCount: (setIndex: number, setItemIndex: number, set: Set, newRepCount: number | undefined) => void;
   onUpdateWeightValue: (setIndex: number, setItemIndex: number, set: Set, newWeightValue: number | undefined) => void;
   onCompleteRound: () => void;
   onAddSet: () => void;
+  onDeleteSet: (setIndex: number, setItemIndex: number) => void;
 };
 
 const ActiveRound = (props: Props) => {
-  const { activeRound, onUpdateRepCount, onUpdateWeightValue, onCompleteRound, onAddSet } = props;
+  const { activeRound, onDeleteRound, onUpdateRepCount, onUpdateWeightValue, onCompleteRound, onAddSet, onDeleteSet } =
+    props;
 
   return (
     <Card className='active-round ps-3'>
@@ -39,10 +44,11 @@ const ActiveRound = (props: Props) => {
               </p>
             )}
           </Col>
-          {/* TODO */}
-          <Col className='d-flex justify-content-end'>
-            {/* TODO NAVIGATE TO EXERCISE HISTORY */}
-            {/* <Button onClick={() => {}}>History </Button> */}
+
+          <Col className='d-flex justify-content-end align-items-start'>
+            <Button onClick={() => onDeleteRound(-1)} variant=''>
+              <FontAwesomeIcon icon={faX}></FontAwesomeIcon>
+            </Button>
           </Col>
         </Row>
 
@@ -52,7 +58,7 @@ const ActiveRound = (props: Props) => {
             <span>Reps</span>
           </Col>
           <Col xs={1}></Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <span>Kg</span>
           </Col>
         </Row>
@@ -79,11 +85,16 @@ const ActiveRound = (props: Props) => {
                     <Col xs={1} className='d-flex justify-content-center'>
                       <span>x</span>
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={3}>
                       <NumberInput
                         value={setItem.weightKg}
                         onChange={(value?) => onUpdateWeightValue(setIndex, setItemIndex, setItem, value)}
                       ></NumberInput>
+                    </Col>
+                    <Col xs={1} className='d-flex justify-content-center'>
+                      { !(activeRound.setList.length == 1 && activeRound.setList[0].length == 1) &&  <Button onClick={() => onDeleteSet(setIndex, setItemIndex)} variant=''>
+                        <FontAwesomeIcon icon={faX}></FontAwesomeIcon>
+                      </Button>}
                     </Col>
                   </Row>
                 );

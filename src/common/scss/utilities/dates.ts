@@ -16,10 +16,3 @@ export const getWeekdayDate = (date: Date): string => {
   const day = date.getDay();
   return `${weekday[day]}, ${date.getDate()}`;
 };
-
-export const getTimeSince = (date: Date | undefined): string => {
-  const currentDate = new Date();
-  //const timeBetween = currentDate. - date;
-
-  return "2 mins ago";
-};

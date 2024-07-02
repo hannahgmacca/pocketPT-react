@@ -15,6 +15,8 @@ const Workout = () => {
     onUpdateRepCount,
     onUpdateWeightValue,
     onCompleteRound,
+    onDeleteRound,
+    onDeleteSet,
     onAddSet,
     onAddRound,
     onEditRound,
@@ -36,6 +38,8 @@ const Workout = () => {
       {activeRound ? (
         <ActiveRound
           activeRound={activeRound}
+          onDeleteRound={onDeleteRound}
+          onDeleteSet={onDeleteSet}
           onUpdateRepCount={onUpdateRepCount}
           onUpdateWeightValue={onUpdateWeightValue}
           onCompleteRound={onCompleteRound}
@@ -47,7 +51,7 @@ const Workout = () => {
 
       {completedRoundList.map((round, roundIndex) => {
         return (
-          <PreviousRound key={roundIndex} round={round} index={roundIndex} onEditRound={onEditRound}></PreviousRound>
+          <PreviousRound key={roundIndex} round={round} index={roundIndex} onEditRound={onEditRound} onDeleteRound={onDeleteRound}></PreviousRound>
         );
       })}
       <Button className='w-100' variant='outline-primary' onClick={() => onCompleteWorkout()}>

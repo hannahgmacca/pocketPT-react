@@ -67,6 +67,8 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     if (!state.activeRound) return { ...state };
     const { activeRound } = state;
 
+    console.log(activeRound);
+
     const newSetGroup: Set[] = [
       ...activeRound.setList[activeRound.setList.length - 1].map((setItem) => {
         // set default rep count from previous set
@@ -154,6 +156,57 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
       ...state,
       activeRound: newActiveRound,
       completedRoundList: [...newCompletedRoundList],
+    };
+  },
+
+  [WorkoutActionList.DELETE_ROUND]: (state, action: WorkoutAction<WorkoutActionList.DELETE_ROUND>) => {
+    const { activeRound, completedRoundList } = state;
+    const { roundIndex } = action.payload;
+
+    let newActiveRound = activeRound;
+    const newCompletedRoundList = [...completedRoundList];
+
+    if (roundIndex < 0) {
+      newActiveRound = undefined;
+    } else {
+      // remove round from completed rounds
+      newCompletedRoundList.splice(roundIndex, 1);
+    }
+
+    return {
+      ...state,
+      activeRound: newActiveRound,
+      completedRoundList: [...newCompletedRoundList],
+    };
+  },
+
+  [WorkoutActionList.DELETE_SET]: (state, action: WorkoutAction<WorkoutActionList.DELETE_SET>) => {
+    const { setIndex, setItemIndex } = action.payload;
+    const { activeRound } = state;
+
+    if (!activeRound || (activeRound.setList.length == 1 && activeRound.setList[0].length == 1)) return { ...state };
+
+    // Create a deep copy of the activeRound's setList
+    let newSetList = activeRound.setList.map((sets, index) => {
+      if (index === setIndex) {
+        // Filter out the set item
+        return sets.filter((_, itemIndex) => itemIndex !== setItemIndex);
+      }
+      return sets;
+    });
+
+    // Filter out any empty arrays
+    newSetList = newSetList.filter((sets) => sets.length > 0);
+
+    // Update the activeRound with the new setList
+    const newActiveRound = {
+      ...activeRound,
+      setList: newSetList,
+    };
+
+    return {
+      ...state,
+      activeRound: newActiveRound,
     };
   },
 
