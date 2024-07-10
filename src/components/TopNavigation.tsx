@@ -3,7 +3,7 @@ import { Col, Container, Navbar, Row } from "react-bootstrap";
 import { faBars, faBell } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getToday, getWeekdayDate } from "../common/scss/utilities/dates";
+import { getToday, getWeekdayDate } from "../common/utilities/dates";
 
 const TopNavigation: React.FC = () => {
   const today = getToday();

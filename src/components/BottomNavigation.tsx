@@ -8,7 +8,7 @@ import { PlusCircle } from '@geist-ui/icons';
 import { AppContext } from '../state/AppContext';
 
 const BottomNavigation = () => {
-  const [workoutModalOpen, setWorkoutModalOpen] = useState(false);
+  const [newWorkoutModalOpen, setNewWorkoutModalOpen] = useState(false);
   const background = '#3580FF';
 
   const { user } = useContext(AppContext);
@@ -18,7 +18,7 @@ const BottomNavigation = () => {
     if (user?.activeWorkout) {
       navigate(`/workout/${user.activeWorkout}`);
     } else {
-      setWorkoutModalOpen(true);
+      setNewWorkoutModalOpen(true);
     }
   };
 
@@ -41,7 +41,10 @@ const BottomNavigation = () => {
           </Link>
         </Col>
       </Container>
-      <NewWorkoutModal workoutModalOpen={workoutModalOpen} setWorkoutModalOpen={setWorkoutModalOpen}></NewWorkoutModal>
+      <NewWorkoutModal
+        newWorkoutModalOpen={newWorkoutModalOpen}
+        setNewWorkoutModalOpen={setNewWorkoutModalOpen}
+      ></NewWorkoutModal>
     </Navbar>
   );
 };

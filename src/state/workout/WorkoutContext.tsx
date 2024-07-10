@@ -1,34 +1,42 @@
-import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import WorkoutReducer, { initialWorkoutState } from './workoutReducer';
 import { WorkoutActions } from './workoutActions';
-import { Workout } from '../../models/Workout';
+import { Workout, WorkoutType } from '../../models/Workout';
 import { Set } from '../../models/Set';
 import APIClient from '../../apis/APIClient';
 import WorkoutAPI from '../../apis/WorkoutAPI';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Exercise } from '../../models/Exercise';
-import ExerciseAPI from '../../apis/ExercisePickerAPI';
+import ExerciseAPI from '../../apis/ExerciseAPI';
 import { AppContext } from '../AppContext';
 
-export interface WorkoutHook {
-  state: Workout;
-  loading: boolean;
-  exercises: Exercise[];
-  onFirstLoad: () => {};
-  onUpdateRepCount: (setIndex: number, setItemIndex: number, set: Set, newRepCount: number | undefined) => void;
-  onUpdateWeightValue: (setIndex: number, setItemIndex: number, set: Set, newWeightValue: number | undefined) => void;
-  onCompleteRound: () => void;
-  onDeleteRound: (roundIndex: number) => void;
-  onDeleteSet: (setIndex: number, setItemIndex: number) => void;
-  onAddSet: () => void;
-  onAddRound: (roundExercises: Exercise[]) => void;
-  onEditRound: (roundIndex: number) => void;
-  onCompleteWorkout: () => void;
-  setWorkout: (workout: Workout) => void;
-  setWorkoutName: (workoutName: string) => void;
-}
+const initialWorkoutContext = {
+  state: initialWorkoutState as Workout,
+  loading: false as boolean,
+  exercises: [] as Exercise[],
+  exerciseFilters: [] as number[],
+  newExerciseModalOpen: false,
+  onFirstLoad: () => {},
+  onUpdateRepCount: (_setIndex: number, _setItemIndex: number, _set: Set, _newRepCount: number | undefined) => {},
+  onUpdateWeightValue: (_setIndex: number, _setItemIndex: number, _set: Set, _newWeightValue: number | undefined) => {},
+  onCompleteRound: () => {},
+  onDeleteRound: (_roundIndex: number) => {},
+  onDeleteSet: (_setIndex: number, setItemIndex: number) => {},
+  onAddSet: () => {},
+  onAddRound: (_roundExercises: Exercise[]) => {},
+  onEditRound: (_roundIndex: number) => {},
+  onUpdateRoundExercise: (oldExercise: Exercise, newExercise: Exercise) => {},
+  onCompleteWorkout: () => {},
+  setWorkout: (_workout: Workout) => {},
+  setWorkoutName: (_workoutName: string) => {},
+  handleAddExercise: (_exercise: Exercise) => {},
+  setExerciseFilters: (_exerciseFilters: number[]) => {},
+  setNewExerciseModalOpen: (_exerciseModalOpen: boolean) => {},
+};
 
-export const useWorkout = (): WorkoutHook => {
+export const WorkoutContext = createContext(initialWorkoutContext);
+
+export const WorkoutProvider = ({ children }) => {
   const [state, dispatch] = useReducer(WorkoutReducer, initialWorkoutState);
   const { workoutId } = useParams<{ workoutId: string }>();
   const { setUser, user } = useContext(AppContext);
@@ -42,7 +50,9 @@ export const useWorkout = (): WorkoutHook => {
   const navigate = useNavigate();
 
   const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [exerciseFilters, setExerciseFilters] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
+  const [newExerciseModalOpen, setNewExerciseModalOpen] = useState(false);
 
   const onFirstLoad = useCallback(async () => {
     try {
@@ -56,24 +66,27 @@ export const useWorkout = (): WorkoutHook => {
         dispatch(WorkoutActions.setWorkout(newWorkout));
       }
 
-      const exerciseSuggestions = await exerciseClient.getAllExercises();
-      setExercises(exerciseSuggestions);
+      await fetchExercises();
     } catch (err) {
-      //handleError(err);
+      alert('There was an issue fetching exercises.');
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    if (state._id) {
-      workoutClient.updateWorkout(state._id, state);
-
-      if (completedDateTime) {
-        onCompleteWorkout();
-        navigate('/');
-      }
+    if (completedDateTime) {
+      onCompleteWorkout();
+      navigate('/');
     }
+
+   const timeoutId = setTimeout(() => {
+      if (state._id) {
+        workoutClient.updateWorkout(state._id, state);
+      }
+    }, 10000);
+
+    return () => clearTimeout(timeoutId);
   }, [activeRound, completedDateTime]);
 
   useEffect(() => {
@@ -122,6 +135,10 @@ export const useWorkout = (): WorkoutHook => {
     dispatch(WorkoutActions.editRound({ roundIndex }));
   };
 
+  const onUpdateRoundExercise = (oldExercise: Exercise, newExercise: Exercise) => {
+    dispatch(WorkoutActions.updateRoundExercises({ oldExercise, newExercise }));
+  };
+
   const onCompleteWorkout = () => {
     dispatch(WorkoutActions.completeWorkout());
     if (user) {
@@ -147,21 +164,51 @@ export const useWorkout = (): WorkoutHook => {
   const onDeleteSet = (setIndex: number, setItemIndex: number) => {
     dispatch(WorkoutActions.deleteSet({ setIndex, setItemIndex }));
   };
-  return {
-    state,
-    loading,
-    exercises,
-    onFirstLoad,
-    onUpdateRepCount,
-    onUpdateWeightValue,
-    onCompleteRound,
-    onDeleteRound,
-    onDeleteSet,
-    onAddSet,
-    onAddRound,
-    onEditRound,
-    onCompleteWorkout,
-    setWorkout,
-    setWorkoutName,
+
+  const handleAddExercise = async (exercise: Exercise) => {
+    if (!exercise.exerciseName) return;
+
+    try {
+      await exerciseClient.addExercise(exercise);
+      setNewExerciseModalOpen(false);
+      await fetchExercises();
+    } catch {
+      alert('There was an issue adding that exercise');
+    }
   };
+
+  const fetchExercises = async () => {
+    const exerciseSuggestions = await exerciseClient.getAllExercises();
+    setExercises(exerciseSuggestions);
+  };
+
+  return (
+    <WorkoutContext.Provider
+      value={{
+        state,
+        loading,
+        exercises,
+        exerciseFilters,
+        newExerciseModalOpen,
+        onFirstLoad,
+        onUpdateRepCount,
+        onUpdateWeightValue,
+        onCompleteRound,
+        onDeleteRound,
+        onDeleteSet,
+        onAddSet,
+        onAddRound,
+        onEditRound,
+        onUpdateRoundExercise,
+        onCompleteWorkout,
+        setWorkout,
+        setWorkoutName,
+        handleAddExercise,
+        setExerciseFilters,
+        setNewExerciseModalOpen,
+      }}
+    >
+      {children}
+    </WorkoutContext.Provider>
+  );
 };

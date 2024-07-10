@@ -159,6 +159,23 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     };
   },
 
+  [WorkoutActionList.UPDATE_ROUND_EXERCISES]: (state, action: WorkoutAction<WorkoutActionList.UPDATE_ROUND_EXERCISES>) => {
+    const { activeRound } = state;
+    const { oldExercise, newExercise } = action.payload;
+
+    const newActiveRound = activeRound;
+    newActiveRound?.setList.forEach(set => set.forEach(set => {
+      if (set.exercise._id == oldExercise._id) {
+        set.exercise = newExercise;
+      }
+    }))
+
+    return {
+      ...state,
+      activeRound: newActiveRound,
+    };
+  },
+
   [WorkoutActionList.DELETE_ROUND]: (state, action: WorkoutAction<WorkoutActionList.DELETE_ROUND>) => {
     const { activeRound, completedRoundList } = state;
     const { roundIndex } = action.payload;

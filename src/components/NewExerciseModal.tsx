@@ -1,29 +1,15 @@
-import { useState } from 'react';
-import { Button, Col, FormControl, FormGroup, FormLabel, Modal, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Button, Form, FormControl, FormGroup, FormLabel, Modal, Row } from 'react-bootstrap';
+import { Exercise, equipmentType, initalExercise, muscleGroup } from '../models/Exercise';
+import { camelCaseToSentenceCase } from '../common/utilities/stringUtilities';
+import { WorkoutContext } from '../state/workout/WorkoutContext';
 
-type Props = {
-  exerciseModalOpen: boolean;
-  setExerciseModalOpen: (workoutModalOpen: boolean) => void;
-};
-
-class NewExerciseInput {
-  exerciseName: string = '';
-  defaultWeightKg: number = 0;
-  defaultRepCount: number = 0;
-}
-
-const NewExerciseModal = (props: Props) => {
-  const { exerciseModalOpen, setExerciseModalOpen } = props;
-  const [exercise, setExercise] = useState<NewExerciseInput>(new NewExerciseInput());
-
-  const handleAddWorkout = () => {
-    if (!exercise.exerciseName) return;
-    setExerciseModalOpen(false);
-  };
+const NewExerciseModal = () => {
+  const { newExerciseModalOpen, setNewExerciseModalOpen, handleAddExercise } = useContext(WorkoutContext);
+  const [exercise, setExercise] = useState<Exercise>(initalExercise);
 
   return (
-    <Modal show={exerciseModalOpen} onHide={() => setExerciseModalOpen(false)} centered>
+    <Modal show={newExerciseModalOpen} onHide={() => setNewExerciseModalOpen(false)} centered>
       {/* <Modal.Dialog> */}
       <Modal.Header closeButton>
         <Modal.Title>Add an exercise</Modal.Title>
@@ -42,34 +28,34 @@ const NewExerciseModal = (props: Props) => {
           ></FormControl>
         </FormGroup>
 
-        <div className='d-flex justify-between'>
+        <div className='d-flex justify-content-center w-100'>
           <FormGroup>
-            <FormLabel>Default Weight</FormLabel>
-            <FormControl
-              type='number'
-              placeholder={'60'}
-              value={exercise.defaultWeightKg}
-              className='mb-3'
-              step='5'
-              onChange={(e) => setExercise({ ...exercise, defaultWeightKg: parseFloat(e.target.value) })}
-            ></FormControl>
+            <FormLabel>Equipment</FormLabel>
+            <Form.Select
+              aria-label='Equipment Select'
+              onChange={(e) => setExercise({ ...exercise, equipment: equipmentType[e.target.value] })}
+            >
+              {Object.values(equipmentType).map((v) => (
+                <option value={v}>{camelCaseToSentenceCase(v)}</option>
+              ))}
+            </Form.Select>
           </FormGroup>
 
           <FormGroup>
-            <FormLabel>Default Rep Count</FormLabel>
-            <FormControl
-              type='number'
-              placeholder={'60'}
-              value={exercise.defaultRepCount}
-              className='mb-3'
-              step='5'
-              onChange={(e) => setExercise({ ...exercise, defaultRepCount: parseFloat(e.target.value) })}
-            ></FormControl>
+            <FormLabel>Muscle Group</FormLabel>
+            <Form.Select
+              aria-label='Muscle Group Select'
+              onChange={(e) => setExercise({ ...exercise, muscleGroup: muscleGroup[e.target.value] })}
+            >
+              {Object.values(muscleGroup).map((v) => (
+                <option value={v}>{camelCaseToSentenceCase(v)}</option>
+              ))}
+            </Form.Select>
           </FormGroup>
         </div>
 
-        <Button onClick={() => handleAddWorkout()} variant='outline-primary' className='me-2'>
-          Strength
+        <Button onClick={() => handleAddExercise(exercise)} variant='outline-primary' className='me-2'>
+          Add
         </Button>
       </Modal.Body>
     </Modal>

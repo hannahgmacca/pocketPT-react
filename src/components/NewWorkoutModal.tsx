@@ -1,19 +1,17 @@
-import { useContext } from 'react';
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from '../state/AppContext';
 import APIClient from '../apis/APIClient';
 import WorkoutAPI from '../apis/WorkoutAPI';
 import { initialWorkoutState } from '../state/workout/workoutReducer';
 import { WorkoutType } from '../models/Workout';
 
 type Props = {
-  workoutModalOpen: boolean;
-  setWorkoutModalOpen: (workoutModalOpen: boolean) => void;
+  newWorkoutModalOpen: boolean;
+  setNewWorkoutModalOpen: (workoutModalOpen: boolean) => void;
 };
 
 const NewWorkoutModal = (props: Props) => {
-  const { workoutModalOpen, setWorkoutModalOpen } = props;
+  const { newWorkoutModalOpen, setNewWorkoutModalOpen } = props;
 
   const navigate = useNavigate();
 
@@ -21,7 +19,7 @@ const NewWorkoutModal = (props: Props) => {
   const workoutClient = new WorkoutAPI(apiClient);
 
   const handleStartWorkout = async (workoutType: number) => {
-    setWorkoutModalOpen(false);
+    setNewWorkoutModalOpen(false);
     const intialWorkout = initialWorkoutState;
 
     switch (workoutType) {
@@ -39,8 +37,8 @@ const NewWorkoutModal = (props: Props) => {
 
   return (
     <Modal
-      show={workoutModalOpen}
-      onHide={() => setWorkoutModalOpen(false)}
+      show={newWorkoutModalOpen}
+      onHide={() => setNewWorkoutModalOpen(false)}
       centered
     >
       <Modal.Header closeButton>

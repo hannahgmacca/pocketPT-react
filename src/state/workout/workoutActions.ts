@@ -10,6 +10,7 @@ export enum WorkoutActionList {
   UPDATE_SET = 'UPDATE_SET',
   SET_WORKOUT = 'SET_WORKOUT',
   EDIT_ROUND = 'EDIT_ROUND',
+  UPDATE_ROUND_EXERCISES = 'UPDATE_ROUND_EXERCISES',
   DELETE_ROUND = 'DELETE_ROUND',
   DELETE_SET = 'DELETE_SET',
   COMPLETE_WORKOUT = 'COMPLETE_WORKOUT',
@@ -30,6 +31,8 @@ export const WorkoutActions = {
   completeRound: () => createAction(WorkoutActionList.COMPLETE_ROUND),
 
   editRound: (payload: { roundIndex: number }) => createAction(WorkoutActionList.EDIT_ROUND, payload),
+
+  updateRoundExercises: (payload: { oldExercise: Exercise, newExercise: Exercise }) => createAction(WorkoutActionList.UPDATE_ROUND_EXERCISES, payload),
 
   deleteRound: (payload: { roundIndex: number }) => createAction(WorkoutActionList.DELETE_ROUND, payload),
 

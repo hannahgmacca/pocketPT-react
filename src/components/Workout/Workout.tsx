@@ -3,29 +3,21 @@ import './_workout.scss';
 import ActiveRound from './sections/activeRound';
 import NewRound from './sections/newRound';
 import PreviousRound from './sections/previousRound';
-import { WorkoutType } from '../../models/Workout';
-import { useWorkout } from '../../state/workout/workoutHook';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { WorkoutContext } from '../../state/workout/WorkoutContext';
 
 const Workout = () => {
-  const workoutHook = useWorkout();
   const {
     state,
     exercises,
-    onUpdateRepCount,
-    onUpdateWeightValue,
-    onCompleteRound,
     onDeleteRound,
-    onDeleteSet,
-    onAddSet,
     onAddRound,
     onEditRound,
     onCompleteWorkout,
     setWorkoutName,
-  } = workoutHook;
+  } = useContext(WorkoutContext);
 
   const { activeRound, workoutName, completedRoundList } = state;
-  const [exerciseFilters, setExerciseFilters] = useState<number[]>([]);
 
   return (
     <Container className='gx-2'>
@@ -36,17 +28,11 @@ const Workout = () => {
         onChange={(e) => setWorkoutName(e.target.value)}
       ></FormControl>
       {activeRound ? (
-        <ActiveRound
-          activeRound={activeRound}
-          onDeleteRound={onDeleteRound}
-          onDeleteSet={onDeleteSet}
-          onUpdateRepCount={onUpdateRepCount}
-          onUpdateWeightValue={onUpdateWeightValue}
-          onCompleteRound={onCompleteRound}
-          onAddSet={onAddSet}
+        <ActiveRound activeRound={activeRound}
+         
         />
       ) : (
-        <NewRound exercises={exercises} onAddRound={onAddRound} exerciseFilters={exerciseFilters} setExerciseFilters={setExerciseFilters}/>
+        <NewRound/>
       )}
 
       {completedRoundList.map((round, roundIndex) => {

@@ -8,22 +8,15 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from 'react-bootstrap';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Exercise, equipmentType } from '../../../models/Exercise';
 import ExercisePicker from '../../ExercisePicker/ExercisePicker';
 import Card from '../../Card/Card';
 import NewExerciseModal from '../../NewExerciseModal';
+import { WorkoutContext } from '../../../state/workout/WorkoutContext';
 
-type Props = {
-  onAddRound: (newExercises: Exercise[]) => void;
-  exercises: Exercise[];
-  exerciseFilters: number[];
-  setExerciseFilters: (exerciseFilters: number[]) => void
-};
-
-const NewRound = (props: Props) => {
-  const { onAddRound, exercises, exerciseFilters, setExerciseFilters } = props;
-  const [newExerciseModalOpen, setNewExerciseModalOpen] = useState(false);
+const NewRound = () => {
+  const { onAddRound, exercises, exerciseFilters, setExerciseFilters, setNewExerciseModalOpen } = useContext(WorkoutContext);
   const [selectedExercise, setSelectedExercise] = useState<Exercise[] | undefined>(undefined);
 
   const [filteredExercises, setFilteredExercises] = useState(exercises);
@@ -137,19 +130,24 @@ const NewRound = (props: Props) => {
                 </ToggleButtonGroup>
               </Row>
             </FormGroup>
+
+            
             <ExercisePicker
               selectedExercise={selectedExercise}
               suggestions={filteredExercises}
               onChange={onUpdateExercise}
             ></ExercisePicker>
-            <div className='d-flex justify-content-center'>
+            <div className='d-flex justify-content-between'>
+              <Button variant='outline-secondary' className='mt-2' onClick={() => setNewExerciseModalOpen(true)}>
+                New Exercise
+              </Button>
               <Button variant='outline-secondary' className='mt-2' onClick={() => onStartRound()}>
                 Start round
               </Button>
             </div>
           </Col>
         </Row>
-        <NewExerciseModal setExerciseModalOpen={setNewExerciseModalOpen} exerciseModalOpen={newExerciseModalOpen} />
+        <NewExerciseModal />
       </Container>
     </Card>
   );

@@ -2,7 +2,8 @@ export interface Exercise {
   _id: string;
   exerciseName: string;
   equipment: equipmentType;
-  muscleGroup: muscleGroup
+  muscleGroup: muscleGroup;
+  isEachSide: boolean;
 }
 
 export enum muscleGroup {
@@ -30,3 +31,11 @@ export enum equipmentType {
   dumbell = 'dumbell',
   stetchBand = 'stretchBand'
 }
+
+export const initalExercise = {
+  _id: '',
+  exerciseName: '',
+  equipment: equipmentType.none,
+  muscleGroup: muscleGroup.none,
+  isEachSide: false
+} as Exercise;

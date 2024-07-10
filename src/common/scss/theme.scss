@@ -54,8 +54,8 @@ $modal-backdrop-opacity: 85%;
 
 
 // Input
-$form-select-color: black;
-$form-select-bg: white;
+// $form-select-color: ;
+// $form-select-bg: white;
 
 $theme-colors: (
   "primary": #006EFE,
@@ -73,6 +73,8 @@ $theme-colors: (
 .btn-outline-dark {
   color: #ffffff !important; // Replace with your desired text color
 }
+
+
 
 // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
 @import "../../../node_modules/bootstrap/scss/variables";
@@ -112,3 +114,11 @@ $theme-colors: (
 // // Your variable overrides
 // $body-bg: #000;
 // $body-color: #111;
+
+body {
+  font-size: 12px;
+}
+
+h5 {
+  font-size: 16px;
+}

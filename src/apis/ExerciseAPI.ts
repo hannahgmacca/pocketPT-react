@@ -16,9 +16,9 @@ class ExerciseAPI {
   //   return await this.client.get(`/workout/${id}`);
   // }
 
-  // public async addWorkout(workout: Workout): Promise<Workout> {
-  //   return await this.client.post('/workout', workout);
-  // }
+  public async addExercise(exercise: Exercise): Promise<Exercise> {
+    return await this.client.post('/exercise', [exercise]);
+  }
 
   // public async updateWorkout(id: string, workout: any) {
   //   return await this.client.patch(`/workout/${id}`, workout);

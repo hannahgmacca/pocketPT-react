@@ -1,11 +1,14 @@
-import { Container } from "react-bootstrap";
-import Workout from "../../components/Workout/Workout";
+import { Container } from 'react-bootstrap';
+import Workout from '../../components/Workout/Workout';
+import { WorkoutProvider } from '../../state/workout/WorkoutContext';
 
 const WorkoutPage = () => {
   return (
-    <Container>
-      <Workout></Workout>
-    </Container>
+    <WorkoutProvider>
+      <Container>
+        <Workout></Workout>
+      </Container>
+    </WorkoutProvider>
   );
 };
 

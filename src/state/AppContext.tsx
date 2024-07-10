@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useReducer, useState } from 'react';
 import User from '../models/User';
 import APIClient from '../apis/APIClient';
 import UserAPI from '../apis/UserAPI';
-import { useWorkout } from './workout/workoutHook';
 
 const initialAppState = {
     user: null as User | null,
@@ -35,11 +34,11 @@ export const AppProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log(token)
-    if (token) {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
         fetchUser();
     }
-  }, [token]);
+  }, []);
 
   return (
     <AppContext.Provider value={{ user, setUser, token, setToken }}>

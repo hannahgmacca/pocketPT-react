@@ -1,11 +1,12 @@
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { Round, RoundSetType } from '../../../models/Round';
 import Card from '../../Card/Card';
-import { getCharacterIndex } from '../../../common/scss/utilities/alphabet';
+import { getCharacterIndex } from '../../../common/utilities/alphabet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import NumberInput from '../../NumberInput';
 import { faX } from '@fortawesome/free-solid-svg-icons';
+import RoundHeader from './roundHeader';
 
 type Props = {
   index: number;
@@ -20,26 +21,7 @@ const PreviousRound = (props: Props) => {
     <Card className={`complete-round ps-3 ${index % 2 === 0 && 'odd'}`}>
       <Container className='p-4 fw-medium text-center'>
         <Row>
-          <Col className='text-start text-capitalize mb-3'>
-            <h5 className='fw-bold text-start text-capitalize'>
-              {round.roundSetType === RoundSetType.singleSet
-                ? round.setList[0][0].exercise.exerciseName
-                : round.roundSetType}
-            </h5>
-
-            {!(round.roundSetType === RoundSetType.singleSet) && (
-              <p>
-                {round.setList[0].map((setGroup, setGroupIndex) => {
-                  return (
-                    <span key={setGroupIndex}>
-                      {`${getCharacterIndex(index)}. ${setGroup.exercise.exerciseName} `}
-                      <br></br>
-                    </span>
-                  );
-                })}
-              </p>
-            )}
-          </Col>
+          <RoundHeader round={round}/>
           <Col className='d-flex justify-content-end'>
             <div>
               <Button variant='outline-secondary' onClick={() => onEditRound(index)}>
