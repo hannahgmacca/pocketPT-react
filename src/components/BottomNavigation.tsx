@@ -24,7 +24,7 @@ const BottomNavigation = () => {
 
   return (
     <Navbar fixed='bottom' className='pb-4' style={{ background: '#000' }}>
-      <Container fluid className='justify-content-between'>
+      <Container className='justify-content-between'>
         <Col className='d-flex justify-content-center' xs={3}>
           <Link to='/'>
             <FontAwesomeIcon size='lg' icon={faHouse} style={{ color: background }} />
