@@ -1,3 +1,4 @@
+import { devNull } from 'os';
 import { Handlers, createReducer } from '../../hooks-store/action-factory';
 import { Exercise } from '../../models/Exercise';
 import { Round, RoundSetType } from '../../models/Round';
@@ -12,7 +13,7 @@ export const initialWorkoutState = {
   workoutType: WorkoutType.strength,
   isActive: true,
   completedRoundList: [] as Round[],
-  activeRound: undefined as Round | undefined,
+  activeRound: null as Round | null,
   caloriesBurnt: 0,
   startedDatedTime: undefined as Date | undefined,
   completedDatedTime: undefined as Date | undefined,
@@ -133,7 +134,7 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
 
     return {
       ...state,
-      activeRound: undefined,
+      activeRound: null,
       completedRoundList: [...state.completedRoundList, activeRound],
     };
   },
@@ -143,7 +144,7 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     const { roundIndex } = action.payload;
 
     // find new active round
-    const newActiveRound = completedRoundList.find((round, index) => index === roundIndex);
+    const newActiveRound = completedRoundList.find((round, index) => index === roundIndex) || null;
 
     // remove new active round from completed rounds
     const newCompletedRoundList = [...completedRoundList];
@@ -184,7 +185,7 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     const newCompletedRoundList = [...completedRoundList];
 
     if (roundIndex < 0) {
-      newActiveRound = undefined;
+      newActiveRound = null;
     } else {
       // remove round from completed rounds
       newCompletedRoundList.splice(roundIndex, 1);
@@ -234,9 +235,9 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
 
     return {
       ...state,
-      activeRound: undefined,
+      activeRound: null,
       isActive: false,
-      completedDateTime: new Date(),
+      completedDateTime: state.completedDateTime || new Date(),
       completedRoundList,
     };
   },

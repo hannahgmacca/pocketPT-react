@@ -7,16 +7,18 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import NumberInput from '../../NumberInput';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import RoundHeader from './roundHeader';
+import { useContext } from 'react';
+import { WorkoutContext } from '../../../state/workout/WorkoutContext';
 
 type Props = {
   index: number;
   round: Round;
-  onEditRound: (roundIndex: number) => void;
-  onDeleteRound: (roundIndex: number) => void;
 };
 
 const PreviousRound = (props: Props) => {
-  const { index, round, onEditRound, onDeleteRound } = props;
+  const { index, round } = props;
+  const {onEditRound, onDeleteRound} = useContext(WorkoutContext);
+  
   return (
     <Card className={`complete-round ps-3 ${index % 2 === 0 && 'odd'}`}>
       <Container className='p-4 fw-medium text-center'>

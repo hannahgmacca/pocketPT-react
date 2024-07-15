@@ -41,18 +41,18 @@ export const WorkoutProvider = ({ children }) => {
   const { workoutId } = useParams<{ workoutId: string }>();
   const { setUser, user } = useContext(AppContext);
 
-  const { activeRound, completedDateTime } = state;
+  const { activeRound, completedRoundList, completedDateTime } = state;
 
   const apiClient = new APIClient();
   const workoutClient = new WorkoutAPI(apiClient);
   const exerciseClient = new ExerciseAPI(apiClient);
 
-  const navigate = useNavigate();
-
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [exerciseFilters, setExerciseFilters] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [newExerciseModalOpen, setNewExerciseModalOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const onFirstLoad = useCallback(async () => {
     try {
@@ -75,19 +75,20 @@ export const WorkoutProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (completedDateTime) {
-      onCompleteWorkout();
-      navigate('/');
-    }
-
-   const timeoutId = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       if (state._id) {
         workoutClient.updateWorkout(state._id, state);
       }
-    }, 10000);
+    }, 3000);
 
     return () => clearTimeout(timeoutId);
-  }, [activeRound, completedDateTime]);
+  }, [activeRound, completedRoundList]);
+
+  useEffect(() => {
+    if (state._id && completedDateTime) {
+      workoutClient.updateWorkout(state._id, state);
+    }
+  }, [completedDateTime]);
 
   useEffect(() => {
     onFirstLoad();
@@ -139,14 +140,22 @@ export const WorkoutProvider = ({ children }) => {
     dispatch(WorkoutActions.updateRoundExercises({ oldExercise, newExercise }));
   };
 
-  const onCompleteWorkout = () => {
+  const onCompleteWorkout = async () => {
     dispatch(WorkoutActions.completeWorkout());
+    await workoutClient.updateWorkout(state._id, state);
     if (user) {
       setUser({
         ...user,
         activeWorkout: null,
       });
     }
+
+    navigate('/');
+  };
+
+  const onWorkoutCompleted = async () => {
+    // await workoutClient.updateWorkout(state._id, state);
+    // navigate('/');
   };
 
   const setWorkout = (workout: Workout) => {

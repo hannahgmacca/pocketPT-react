@@ -1,4 +1,4 @@
-import { Button, Container, FormControl } from 'react-bootstrap';
+import { Button, Container, FormControl, Spinner } from 'react-bootstrap';
 import './_workout.scss';
 import ActiveRound from './sections/activeRound';
 import NewRound from './sections/newRound';
@@ -7,42 +7,43 @@ import { useContext, useState } from 'react';
 import { WorkoutContext } from '../../state/workout/WorkoutContext';
 
 const Workout = () => {
-  const {
-    state,
-    exercises,
-    onDeleteRound,
-    onAddRound,
-    onEditRound,
-    onCompleteWorkout,
-    setWorkoutName,
-  } = useContext(WorkoutContext);
+  const { state, onCompleteWorkout, setWorkoutName, loading } =
+    useContext(WorkoutContext);
 
   const { activeRound, workoutName, completedRoundList } = state;
 
   return (
     <Container className='gx-2'>
-      <FormControl
-        type='text'
-        value={workoutName}
-        placeholder='New workout'
-        onChange={(e) => setWorkoutName(e.target.value)}
-      ></FormControl>
-      {activeRound ? (
-        <ActiveRound activeRound={activeRound}
-         
-        />
+      {loading ? (
+        <div className='d-flex justify-content-center align-items-center' style={{ height: '100vh' }}>
+          <Spinner animation='border' role='status'>
+            <span className='visually-hidden'>Loading...</span>
+          </Spinner>
+        </div>
       ) : (
-        <NewRound/>
-      )}
+        <>
+          <FormControl
+            type='text'
+            value={workoutName}
+            placeholder='New workout'
+            onChange={(e) => setWorkoutName(e.target.value)}
+          ></FormControl>
+          {activeRound ? <ActiveRound activeRound={activeRound} /> : <NewRound />}
 
-      {completedRoundList.map((round, roundIndex) => {
-        return (
-          <PreviousRound key={roundIndex} round={round} index={roundIndex} onEditRound={onEditRound} onDeleteRound={onDeleteRound}></PreviousRound>
-        );
-      })}
-      <Button className='w-100' variant='outline-primary' onClick={() => onCompleteWorkout()}>
-        Finish
-      </Button>
+          {completedRoundList.map((round, roundIndex) => {
+            return (
+              <PreviousRound
+                key={roundIndex}
+                round={round}
+                index={roundIndex}
+              ></PreviousRound>
+            );
+          })}
+          <Button className='w-100' variant='outline-primary' onClick={() => onCompleteWorkout()}>
+            Finish
+          </Button>
+        </>
+      )}
     </Container>
   );
 };

@@ -16,8 +16,6 @@ const EquipmentPicker = (props: Props) => {
     return getEnumValues(equipmentType).map(item => (equipmentType[item]));
   }
 
-  console.log(getSuggestedEquipment());
-
   return (
     <Select
       getOptionLabel={(item) => camelCaseToSentenceCase(item)}

@@ -6,7 +6,7 @@ export interface Workout {
   workoutName: string;
   workoutType: WorkoutType;
   completedRoundList: Round[];
-  activeRound: Round | undefined;
+  activeRound: Round | null;
   caloriesBurnt: number;
   isActive?: boolean;
   startedDateTime?: Date;
