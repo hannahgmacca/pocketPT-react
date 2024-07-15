@@ -1,5 +1,6 @@
 export interface Exercise {
   _id: string;
+  userId: string;
   exerciseName: string;
   equipment: equipmentType;
   muscleGroup: muscleGroup;
@@ -35,6 +36,7 @@ export enum equipmentType {
 export const initalExercise = {
   _id: '',
   exerciseName: '',
+  userId: '',
   equipment: equipmentType.none,
   muscleGroup: muscleGroup.none,
   isEachSide: false

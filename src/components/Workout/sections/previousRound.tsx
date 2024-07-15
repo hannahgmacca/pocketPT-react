@@ -18,9 +18,9 @@ type Props = {
 const PreviousRound = (props: Props) => {
   const { index, round } = props;
   const {onEditRound, onDeleteRound} = useContext(WorkoutContext);
-  
+
   return (
-    <Card className={`complete-round ps-3 ${index % 2 === 0 && 'odd'}`}>
+    <Card variant='outlined-ribbon' className={`complete-round ps-3 ${index % 2 === 0 && 'odd'}`}>
       <Container className='p-4 fw-medium text-center'>
         <Row>
           <RoundHeader round={round}/>

@@ -20,7 +20,7 @@ const ActiveRound = (props: Props) => {
   const { activeRound } = props;
 
   return (
-    <Card className='active-round ps-3'>
+    <Card variant='outlined-ribbon' className='ps-3'>
       <Container className='p-4 fw-medium text-center'>
         <Row>
           <RoundHeader round={activeRound}></RoundHeader>

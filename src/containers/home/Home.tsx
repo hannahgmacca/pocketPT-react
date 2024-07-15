@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Spinner } from 'react-bootstrap';
 import WorkoutCarousel from '../../components/WorkoutCarousel/WorkoutCarousel';
 import WorkoutList from '../../components/WorkoutList/WorkoutList';
 import { Workout, WorkoutShort } from '../../models/Workout';
@@ -57,7 +57,11 @@ const Home = () => {
           <WorkoutList title='Previous Workouts' workoutList={previousWorkouts} handleDelete={handleDelete}></WorkoutList>{' '}
         </Container>
       ) : (
-        <div>Loading...</div>
+        <div className='d-flex justify-content-center align-items-center' style={{ height: '100vh' }}>
+          <Spinner animation='border' role='status'>
+            <span className='visually-hidden'>Loading...</span>
+          </Spinner>
+        </div>
       )}
     </Container>
   );

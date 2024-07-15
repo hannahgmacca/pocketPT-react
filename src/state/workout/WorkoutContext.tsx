@@ -68,7 +68,12 @@ export const WorkoutProvider = ({ children }) => {
 
       await fetchExercises();
     } catch (err) {
-      alert('There was an issue fetching exercises.');
+      alert('There was an issue fetching workout.');
+      if (user)
+        setUser({
+          ...user,
+          activeWorkout: null,
+        });
     } finally {
       setLoading(false);
     }
@@ -175,9 +180,10 @@ export const WorkoutProvider = ({ children }) => {
   };
 
   const handleAddExercise = async (exercise: Exercise) => {
-    if (!exercise.exerciseName) return;
+    if (!exercise.exerciseName || !user) return;
 
     try {
+      exercise.userId = user._id;
       await exerciseClient.addExercise(exercise);
       setNewExerciseModalOpen(false);
       await fetchExercises();

@@ -12,9 +12,12 @@
   &.carousel {
     max-width: 300px;
 
-    &.active {
+    &.contained {
       background-color: #006EFE;
+    }
 
+    &.outlined {
+      border: 1px solid #181b2d;
     }
   }
 
@@ -41,10 +44,10 @@
   background-color: #00AC3A;
 }
 
-.card:nth-child(4n) .ribbon  {
+.card:nth-child(4n) .outlined-ribbon  {
   background-color: #9440D5;
 }
 
-.card:nth-child(5n) .ribbon  {
+.card:nth-child(5n) .outlined-ribbon  {
   background-color: #00A995;
 }

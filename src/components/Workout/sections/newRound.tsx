@@ -76,7 +76,7 @@ const NewRound = () => {
   };
 
   return (
-    <Card className='new-round'>
+    <Card variant='outlined-ribbon'>
       <Container className='p-4 fw-medium text-center'>
         <Row>
           <Col className='mb-2'>
