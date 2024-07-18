@@ -1,23 +1,26 @@
-import { Exercise } from "../../models/Exercise";
-import Select, { StylesConfig } from "react-select";
+import { Exercise } from '../../models/Exercise';
+import Select, { StylesConfig } from 'react-select';
+import { WorkoutContext } from '../../state/workout/WorkoutContext';
+import { useContext } from 'react';
 
 type Props = {
-  selectedExercise: Exercise[] | undefined;
-  suggestions: Exercise[] | undefined;
+  selectedExercise: Exercise[] | Exercise |  undefined;
+  isMulti: boolean;
   onChange: (value?: any) => void;
 };
 
 const ExercisePicker = (props: Props) => {
-  const { onChange, suggestions, selectedExercise } = props;
+  const { onChange, selectedExercise, isMulti } = props;
+  const { exercises } = useContext(WorkoutContext);
 
   return (
     <Select
       getOptionLabel={(item) => item.exerciseName}
       getOptionValue={(item) => item._id}
-      options={suggestions}
+      options={exercises}
       value={selectedExercise}
       onChange={onChange}
-      isMulti
+      isMulti={isMulti}
       theme={(theme) => ({
         ...theme,
         colors: {
@@ -32,9 +35,9 @@ const ExercisePicker = (props: Props) => {
         }),
         option: (baseStyles, state) => ({
           ...baseStyles,
-          color: "white",
-          textAlign: "left",
-          textTransform: "capitalize",
+          color: 'white',
+          textAlign: 'left',
+          textTransform: 'capitalize',
           fontSize: '12px',
           background: state.isFocused ? '#242424' : '#0a0a0a',
         }),
@@ -43,8 +46,7 @@ const ExercisePicker = (props: Props) => {
           background: '#0a0a0a',
           borderColor: '#2e2e2e',
           boxShadow: '#2e2e2e',
-
-        }),    
+        }),
         control: (baseStyles, state) => ({
           ...baseStyles,
           background: '#0a0a0a',
@@ -54,12 +56,12 @@ const ExercisePicker = (props: Props) => {
 
         placeholder: (baseStyles) => ({
           ...baseStyles,
-          textAlign: "left",
+          textAlign: 'left',
         }),
         singleValue: (baseStyles) => ({
           ...baseStyles,
-          textAlign: "left",
-          textTransform: "capitalize",
+          textAlign: 'left',
+          textTransform: 'capitalize',
         }),
       }}
     ></Select>

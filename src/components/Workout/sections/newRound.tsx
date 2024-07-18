@@ -133,8 +133,8 @@ const NewRound = () => {
 
             
             <ExercisePicker
+              isMulti
               selectedExercise={selectedExercise}
-              suggestions={filteredExercises}
               onChange={onUpdateExercise}
             ></ExercisePicker>
             <div className='d-flex justify-content-between'>

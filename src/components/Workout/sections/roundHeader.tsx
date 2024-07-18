@@ -1,27 +1,22 @@
-import { Col, ToggleButton } from 'react-bootstrap';
+import { Button, Col, ToggleButton } from 'react-bootstrap';
 import { Round, RoundSetType } from '../../../models/Round';
 import { getCharacterIndex } from '../../../common/utilities/alphabet';
 import { useContext } from 'react';
 import { WorkoutContext } from '../../../state/workout/WorkoutContext';
-import EquipmentPicker from '../../EquipmentPicker/EquipmentPicker';
-import { Exercise, equipmentType } from '../../../models/Exercise';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   round: Round;
 };
 
 const RoundHeader = (props: Props) => {
-  const { onUpdateRoundExercise } = useContext(WorkoutContext);
+  const { onUpdateRoundExercise, setEditExerciseModalOpen } = useContext(WorkoutContext);
   const { round } = props;
   const isSingleSet = round.roundSetType === RoundSetType.singleSet;
 
   const getRoundTitle = () => {
     return isSingleSet ? round.setList[0][0].exercise.exerciseName : round.roundSetType;
-  };
-
-  const handleEquipmentSelect = (exercise: Exercise, equipment: equipmentType) => {
-    console.log(equipment)
-    // onUpdateRoundExercise(exercise, { ...exercise, equipment });
   };
 
   const getMultiSetExercises = () => {
@@ -65,7 +60,10 @@ const RoundHeader = (props: Props) => {
   return (
     <Col className='text-start text-capitalize mb-2'>
       <h5 className='fw-bold text-start text-capitalize'>
-        {getRoundTitle()} {isSingleSet && <EachSideToggle exercise={round.setList[0][0].exercise} />}
+        {getRoundTitle()} {isSingleSet && <EachSideToggle exercise={round.setList[0][0].exercise} />}{' '}
+        <Button variant='outline-secondary' size='sm' onClick={() => setEditExerciseModalOpen(true)}>
+          <FontAwesomeIcon icon={faPencil} />
+        </Button>
       </h5>
       <small>{isSingleSet && round.setList[0][0].exercise.equipment}</small>
       {/* <EquipmentPicker

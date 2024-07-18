@@ -16,6 +16,7 @@ const initialWorkoutContext = {
   exercises: [] as Exercise[],
   exerciseFilters: [] as number[],
   newExerciseModalOpen: false,
+  editExerciseModalOpen: false,
   onFirstLoad: () => {},
   onUpdateRepCount: (_setIndex: number, _setItemIndex: number, _set: Set, _newRepCount: number | undefined) => {},
   onUpdateWeightValue: (_setIndex: number, _setItemIndex: number, _set: Set, _newWeightValue: number | undefined) => {},
@@ -32,6 +33,8 @@ const initialWorkoutContext = {
   handleAddExercise: (_exercise: Exercise) => {},
   setExerciseFilters: (_exerciseFilters: number[]) => {},
   setNewExerciseModalOpen: (_exerciseModalOpen: boolean) => {},
+  setEditExerciseModalOpen: (_exerciseModalOpen: boolean) => {},
+
 };
 
 export const WorkoutContext = createContext(initialWorkoutContext);
@@ -40,6 +43,7 @@ export const WorkoutProvider = ({ children }) => {
   const [state, dispatch] = useReducer(WorkoutReducer, initialWorkoutState);
   const { workoutId } = useParams<{ workoutId: string }>();
   const { setUser, user } = useContext(AppContext);
+
 
   const { activeRound, completedRoundList, completedDateTime } = state;
 
@@ -51,6 +55,7 @@ export const WorkoutProvider = ({ children }) => {
   const [exerciseFilters, setExerciseFilters] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [newExerciseModalOpen, setNewExerciseModalOpen] = useState(false);
+  const [editExerciseModalOpen, setEditExerciseModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -205,6 +210,7 @@ export const WorkoutProvider = ({ children }) => {
         exercises,
         exerciseFilters,
         newExerciseModalOpen,
+        editExerciseModalOpen,
         onFirstLoad,
         onUpdateRepCount,
         onUpdateWeightValue,
@@ -221,6 +227,7 @@ export const WorkoutProvider = ({ children }) => {
         handleAddExercise,
         setExerciseFilters,
         setNewExerciseModalOpen,
+        setEditExerciseModalOpen,
       }}
     >
       {children}

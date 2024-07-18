@@ -5,6 +5,7 @@ import NewRound from './sections/newRound';
 import PreviousRound from './sections/previousRound';
 import { useContext, useState } from 'react';
 import { WorkoutContext } from '../../state/workout/WorkoutContext';
+import EditExerciseModal from '../EditExerciseModal';
 
 const Workout = () => {
   const { state, onCompleteWorkout, setWorkoutName, loading } =
@@ -44,6 +45,7 @@ const Workout = () => {
           </Button>
         </>
       )}
+      <EditExerciseModal></EditExerciseModal>
     </Container>
   );
 };

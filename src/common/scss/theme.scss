@@ -54,8 +54,7 @@ $modal-backdrop-opacity: 85%;
 
 
 // Input
-// $form-select-color: ;
-// $form-select-bg: white;
+$form-select-font-size: 12px;
 
 $theme-colors: (
   "primary": #006EFE,
@@ -121,4 +120,8 @@ body {
 
 h5 {
   font-size: 16px;
+}
+
+input {
+  font-size: 12px !important;
 }
