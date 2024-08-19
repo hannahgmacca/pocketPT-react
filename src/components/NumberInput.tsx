@@ -13,8 +13,9 @@ const NumberInput = (props: Props) => {
         type='number'
         className='white rounded-rectangle'
         value={value || ''}
-        onChange={(e) => onChange(parseInt(e.target.value))}
+        onChange={(e) => onChange(parseFloat(e.target.value))}
         disabled={disabled}
+        step={0.5}
       ></input>
     );
   } else {

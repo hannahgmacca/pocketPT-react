@@ -2,14 +2,24 @@ import { Button, Container, FormControl, Spinner } from 'react-bootstrap';
 import './_workout.scss';
 import ActiveRound from './sections/activeRound';
 import NewRound from './sections/newRound';
-import PreviousRound from './sections/previousRound';
-import { useContext, useState } from 'react';
-import { WorkoutContext } from '../../state/workout/WorkoutContext';
-import EditExerciseModal from '../EditExerciseModal';
+import PreviousRound from '../Round/PreviousRound';
+import { useContext } from 'react';
+import { WorkoutContext } from './state/WorkoutContext';
+import EditExerciseModal from './sections/EditExerciseModal';
+import ExerciseHistoryModal from '../ExerciseHistoryModal/ExerciseHistoryModal';
 
 const Workout = () => {
-  const { state, onCompleteWorkout, setWorkoutName, loading } =
-    useContext(WorkoutContext);
+  const {
+    state,
+    onCompleteWorkout,
+    setWorkoutName,
+    loading,
+    exerciseHistoryModalOpen,
+    exerciseHistories,
+    setExerciseHistoryModalOpen,
+    onEditRound,
+    onDeleteRound,
+  } = useContext(WorkoutContext);
 
   const { activeRound, workoutName, completedRoundList } = state;
 
@@ -37,6 +47,8 @@ const Workout = () => {
                 key={roundIndex}
                 round={round}
                 index={roundIndex}
+                onEditRound={onEditRound}
+                onDeleteRound={onDeleteRound}
               ></PreviousRound>
             );
           })}
@@ -46,6 +58,11 @@ const Workout = () => {
         </>
       )}
       <EditExerciseModal></EditExerciseModal>
+      <ExerciseHistoryModal
+        isOpen={exerciseHistoryModalOpen}
+        exerciseHistories={exerciseHistories}
+        setClosed={setExerciseHistoryModalOpen}
+      ></ExerciseHistoryModal>
     </Container>
   );
 };

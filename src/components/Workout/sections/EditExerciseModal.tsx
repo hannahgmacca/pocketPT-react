@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { Button, Col, Form, FormGroup, FormLabel, Modal, Row } from 'react-bootstrap';
-import { WorkoutContext } from '../state/workout/WorkoutContext';
-import ExercisePicker from './ExercisePicker/ExercisePicker';
-import { Exercise, equipmentType, muscleGroup } from '../models/Exercise';
-import { camelCaseToSentenceCase } from '../common/utilities/stringUtilities';
+import { WorkoutContext } from '../state/WorkoutContext';
+import ExercisePicker from '../../ExercisePicker/ExercisePicker';
+import { Exercise, equipmentType, muscleGroup } from '../../../models/Exercise';
+import { camelCaseToSentenceCase } from '../../../common/utilities/stringUtilities';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 

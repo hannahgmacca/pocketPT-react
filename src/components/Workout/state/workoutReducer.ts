@@ -1,9 +1,9 @@
 import { devNull } from 'os';
-import { Handlers, createReducer } from '../../hooks-store/action-factory';
-import { Exercise } from '../../models/Exercise';
-import { Round, RoundSetType } from '../../models/Round';
-import { Set } from '../../models/Set';
-import { Workout, WorkoutType } from '../../models/Workout';
+import { Handlers, createReducer } from '../../../hooks-store/action-factory';
+import { Exercise } from '../../../models/Exercise';
+import { Round, RoundSetType } from '../../../models/Round';
+import { GetSetVolume, Set } from '../../../models/Set';
+import { Workout, WorkoutType } from '../../../models/Workout';
 import { WorkoutAction, WorkoutActionList, WorkoutActionNames, WorkoutActionsUnion } from './workoutActions';
 
 export const initialWorkoutState = {
@@ -34,6 +34,8 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
         exercise: e,
         repCount: 0,
         weightKg: 0,
+        totalVolumeKg: 0,
+        isPersonalBest: { weightKg: false, volumeKg: false },
       };
     });
 
@@ -68,20 +70,20 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     if (!state.activeRound) return { ...state };
     const { activeRound } = state;
 
-    console.log(activeRound);
-
     const newSetGroup: Set[] = [
       ...activeRound.setList[activeRound.setList.length - 1].map((setItem) => {
         // set default rep count from previous set
-        const repCount = activeRound.setList.length > 1 ? setItem.repCount : 0;
+        const repCount = activeRound.setList.length > 0 ? setItem.repCount : 0;
 
         // set default weight from previous set
-        const weightKg = activeRound.setList.length > 1 ? setItem.weightKg : 0;
+        const weightKg = activeRound.setList.length > 0 ? setItem.weightKg : 0;
 
         return {
           exercise: setItem.exercise,
           repCount: repCount,
           weightKg: weightKg,
+          totalVolumeKg: repCount * weightKg,
+          isPersonalBest: { weightKg: false, volumeKg: false },
         };
       }),
     ];
@@ -97,8 +99,27 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
 
   [WorkoutActionList.UPDATE_SET]: (state, action: WorkoutAction<WorkoutActionList.UPDATE_SET>) => {
     if (!state.activeRound) return { ...state };
-    const { setIndex, setItemIndex, newSet } = action.payload;
+    const { setIndex, setItemIndex, newSet, exerciseHistory } = action.payload;
 
+    if (!newSet.isPersonalBest) {
+      newSet.isPersonalBest = { weightKg: false, volumeKg: false }
+    }
+
+
+    // Look for personal best
+    // newSet.totalVolumeKg = GetSetVolume(newSet);
+    // let isPersonalBestWeightKg = true;
+    // let isPersonalBestVolumeKg = true;
+
+    // if (exerciseHistory) {
+    //   isPersonalBestWeightKg = exerciseHistory.personalBest.weightKg < newSet.weightKg;
+    //   isPersonalBestVolumeKg = exerciseHistory.personalBest.volumeKg < newSet.totalVolumeKg;
+    // }
+
+    // newSet.isPersonalBest.volumeKg = isPersonalBestVolumeKg;
+    // newSet.isPersonalBest.weightKg = isPersonalBestWeightKg;
+
+    // Look for set in set list
     const updatedSets = state.activeRound.setList.map((setGroup, stIndex) => {
       if (stIndex === setIndex) {
         const updatedSetItems = setGroup.map((setItem, stItemIndex) => {
@@ -121,7 +142,6 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     };
   },
 
-  //TODO
   [WorkoutActionList.SET_WORKOUT]: (state, action: WorkoutAction<WorkoutActionList.SET_WORKOUT>) => {
     return {
       ...action.payload,
@@ -160,16 +180,21 @@ const WorkoutHandlers: Handlers<WorkoutActionNames, Workout> = {
     };
   },
 
-  [WorkoutActionList.UPDATE_ROUND_EXERCISES]: (state, action: WorkoutAction<WorkoutActionList.UPDATE_ROUND_EXERCISES>) => {
+  [WorkoutActionList.UPDATE_ROUND_EXERCISES]: (
+    state,
+    action: WorkoutAction<WorkoutActionList.UPDATE_ROUND_EXERCISES>,
+  ) => {
     const { activeRound } = state;
     const { oldExercise, newExercise } = action.payload;
 
     const newActiveRound = activeRound;
-    newActiveRound?.setList.forEach(set => set.forEach(set => {
-      if (set.exercise._id == oldExercise._id) {
-        set.exercise = newExercise;
-      }
-    }))
+    newActiveRound?.setList.forEach((set) =>
+      set.forEach((set) => {
+        if (set.exercise._id == oldExercise._id) {
+          set.exercise = newExercise;
+        }
+      }),
+    );
 
     return {
       ...state,

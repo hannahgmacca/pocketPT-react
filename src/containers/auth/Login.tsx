@@ -1,4 +1,4 @@
-import { Button, Container, Form, Row } from 'react-bootstrap';
+import { Button, Container, Form, Row, Spinner } from 'react-bootstrap';
 import AuthAPI from '../../apis/AuthAPI';
 import APIClient from '../../apis/APIClient';
 import { useContext, useState } from 'react';
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../state/AppContext';
 
 const LoginPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUser, setToken } = useContext(AppContext);
@@ -16,6 +17,7 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
+      setIsLoading(true);
       const response = await authClient.login({ email, password });
 
       if (response) {
@@ -24,8 +26,10 @@ const LoginPage = () => {
         localStorage.setItem('token', response.token);
         navigate('/');
       }
-    } catch {
-      alert('Login failed');
+    } catch (e) {
+      alert(`Login failed, reason: ${e}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -87,7 +91,7 @@ const LoginPage = () => {
           required
           className='mb-3'
         />
-        <Button onClick={handleLogin}>Login</Button>
+        <Button disabled={isLoading} style={{minWidth: '110px'}} onClick={handleLogin}>{isLoading ? <Spinner size='sm' animation='border' role='status' /> : 'Login'}</Button>
       </Form>
     </Container>
   );

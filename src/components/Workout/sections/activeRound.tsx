@@ -4,9 +4,9 @@ import NumberInput from '../../NumberInput';
 import { getCharacterIndex } from '../../../common/utilities/alphabet';
 import Card from '../../Card/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy, faX } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
-import { WorkoutContext } from '../../../state/workout/WorkoutContext';
+import { WorkoutContext } from '../state/WorkoutContext';
 import RoundHeader from './roundHeader';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const ActiveRound = (props: Props) => {
-  const { onDeleteRound, onUpdateRepCount, onUpdateWeightValue, onCompleteRound, onAddSet, onDeleteSet } =
+  const { onDeleteRound, onUpdateRepCount, onUpdateWeightValue, onCompleteRound, onAddSet, onDeleteSet, setExerciseHistoryModalOpen } =
     useContext(WorkoutContext);
 
   const { activeRound } = props;
@@ -23,9 +23,12 @@ const ActiveRound = (props: Props) => {
     <Card variant='outlined-ribbon' className='ps-3'>
       <Container className='p-4 fw-medium text-center'>
         <Row>
-          <RoundHeader round={activeRound}></RoundHeader>
+          <RoundHeader isActive={true} round={activeRound}></RoundHeader>
 
-          <Col className='d-flex justify-content-end align-items-start'>
+          <Col style={{columnGap: '20px'}} className='d-flex justify-content-end align-items-start'>
+            <Button onClick={() => setExerciseHistoryModalOpen(true)} variant='outline-secondary'>
+              <FontAwesomeIcon icon={faTrophy}></FontAwesomeIcon>
+            </Button>
             <Button onClick={() => onDeleteRound(-1)} variant=''>
               <FontAwesomeIcon icon={faX}></FontAwesomeIcon>
             </Button>
@@ -45,7 +48,7 @@ const ActiveRound = (props: Props) => {
 
         {activeRound.setList.map((set, setIndex) => {
           return (
-            <div key={setIndex}>
+            <div key={setIndex} className='mb-2'>
               {set.map((setItem, setItemIndex) => {
                 return (
                   <Row key={setItemIndex} className='set-row p-1 mb-1'>
@@ -73,7 +76,7 @@ const ActiveRound = (props: Props) => {
                     </Col>
                     <Col xs={1} className='d-flex justify-content-center'>
                       {!(activeRound.setList.length == 1 && activeRound.setList[0].length == 1) && (
-                        <Button onClick={() => onDeleteSet(setIndex, setItemIndex)} variant=''>
+                        <Button onClick={() => onDeleteSet(setIndex, setItemIndex)} size='sm' variant=''>
                           <FontAwesomeIcon icon={faX}></FontAwesomeIcon>
                         </Button>
                       )}

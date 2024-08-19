@@ -13,7 +13,7 @@ const WorkoutCarouselCard = (props: PropsWithChildren<Props>) => {
   const { title, subtitle, isActive, progress } = props;
 
   return (
-    <Card isCarousel variant={isActive ? 'contained' : 'outlined'} backgroundColor=''>
+    <Card isCarousel variant={isActive ? 'contained' : 'outlined'}>
       <h5 className="ms-4 mt-4">{title}</h5>
       <p className="ms-4">{subtitle}</p>
       <Row className="pe-3">

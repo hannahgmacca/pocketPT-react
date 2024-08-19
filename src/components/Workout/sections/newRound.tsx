@@ -13,7 +13,7 @@ import { Exercise, equipmentType } from '../../../models/Exercise';
 import ExercisePicker from '../../ExercisePicker/ExercisePicker';
 import Card from '../../Card/Card';
 import NewExerciseModal from '../../NewExerciseModal';
-import { WorkoutContext } from '../../../state/workout/WorkoutContext';
+import { WorkoutContext } from '../state/WorkoutContext';
 
 const NewRound = () => {
   const { onAddRound, exercises, exerciseFilters, setExerciseFilters, setNewExerciseModalOpen } = useContext(WorkoutContext);

@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { WorkoutShort } from "../../models/Workout";
 import { Container, Row } from "react-bootstrap";
 import WorkoutListItem from "./sections/WorkoutListItem";
-import "./workout-list.scss";
+import "./_workout-list.scss";
 
 type Props = {
   title: string;

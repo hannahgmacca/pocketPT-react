@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Button, Form, FormControl, FormGroup, FormLabel, Modal, Row } from 'react-bootstrap';
 import { Exercise, equipmentType, initalExercise, muscleGroup } from '../models/Exercise';
 import { camelCaseToSentenceCase } from '../common/utilities/stringUtilities';
-import { WorkoutContext } from '../state/workout/WorkoutContext';
+import { WorkoutContext } from './Workout/state/WorkoutContext';
 
 const NewExerciseModal = () => {
   const { newExerciseModalOpen, setNewExerciseModalOpen, handleAddExercise } = useContext(WorkoutContext);

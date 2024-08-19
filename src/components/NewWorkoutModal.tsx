@@ -2,7 +2,7 @@ import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import APIClient from '../apis/APIClient';
 import WorkoutAPI from '../apis/WorkoutAPI';
-import { initialWorkoutState } from '../state/workout/workoutReducer';
+import { initialWorkoutState } from './Workout/state/workoutReducer';
 import { WorkoutType } from '../models/Workout';
 
 type Props = {

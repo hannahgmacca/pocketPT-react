@@ -2,17 +2,19 @@ import { Button, Col, ToggleButton } from 'react-bootstrap';
 import { Round, RoundSetType } from '../../../models/Round';
 import { getCharacterIndex } from '../../../common/utilities/alphabet';
 import { useContext } from 'react';
-import { WorkoutContext } from '../../../state/workout/WorkoutContext';
+import { WorkoutContext } from '../state/WorkoutContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { getIndexedColour } from '../../../common/utilities/colourUtilites';
 
 type Props = {
   round: Round;
+  isActive?: boolean;
 };
 
 const RoundHeader = (props: Props) => {
   const { onUpdateRoundExercise, setEditExerciseModalOpen } = useContext(WorkoutContext);
-  const { round } = props;
+  const { round, isActive } = props;
   const isSingleSet = round.roundSetType === RoundSetType.singleSet;
 
   const getRoundTitle = () => {
@@ -61,9 +63,9 @@ const RoundHeader = (props: Props) => {
     <Col className='text-start text-capitalize mb-2'>
       <h5 className='fw-bold text-start text-capitalize'>
         {getRoundTitle()} {isSingleSet && <EachSideToggle exercise={round.setList[0][0].exercise} />}{' '}
-        <Button variant='outline-secondary' size='sm' onClick={() => setEditExerciseModalOpen(true)}>
+        { isActive && <Button variant='outline-secondary' size='sm' onClick={() => setEditExerciseModalOpen(true)}>
           <FontAwesomeIcon icon={faPencil} />
-        </Button>
+        </Button> }
       </h5>
       <small>{isSingleSet && round.setList[0][0].exercise.equipment}</small>
       {/* <EquipmentPicker

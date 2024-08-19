@@ -1,6 +1,6 @@
 import { Container } from 'react-bootstrap';
 import Workout from '../../components/Workout/Workout';
-import { WorkoutProvider } from '../../state/workout/WorkoutContext';
+import { WorkoutProvider } from '../../components/Workout/state/WorkoutContext';
 
 const WorkoutPage = () => {
   return (

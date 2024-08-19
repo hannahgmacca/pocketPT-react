@@ -1,6 +1,6 @@
 import { Exercise } from '../../models/Exercise';
 import Select, { StylesConfig } from 'react-select';
-import { WorkoutContext } from '../../state/workout/WorkoutContext';
+import { WorkoutContext } from '../Workout/state/WorkoutContext';
 import { useContext } from 'react';
 
 type Props = {

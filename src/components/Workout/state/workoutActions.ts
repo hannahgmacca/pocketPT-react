@@ -1,7 +1,8 @@
-import { ActionNames, ActionsUnion, createAction } from '../../hooks-store/action-factory';
-import { Set } from '../../models/Set';
-import { Exercise } from '../../models/Exercise';
-import { Workout } from '../../models/Workout';
+import { ActionNames, ActionsUnion, createAction } from '../../../hooks-store/action-factory';
+import { Set } from '../../../models/Set';
+import { Exercise } from '../../../models/Exercise';
+import { Workout } from '../../../models/Workout';
+import { ExerciseHistory } from '../../../models/ExerciseHistory';
 
 export enum WorkoutActionList {
   ADD_SET = 'ADD_SET',
@@ -23,7 +24,7 @@ export const WorkoutActions = {
 
   addSet: () => createAction(WorkoutActionList.ADD_SET),
 
-  updateSet: (payload: { setIndex: number; setItemIndex: number; newSet: Set }) =>
+  updateSet: (payload: { setIndex: number; setItemIndex: number; newSet: Set, exerciseHistory: ExerciseHistory | null }) =>
     createAction(WorkoutActionList.UPDATE_SET, payload),
 
   setWorkout: (payload: Workout) => createAction(WorkoutActionList.SET_WORKOUT, payload),

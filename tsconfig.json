@@ -20,5 +20,5 @@
     "noImplicitThis": false,
     "noImplicitAny": false
   },
-  "include": ["src", "public/hooks"]
+  "include": ["src"]
 }
