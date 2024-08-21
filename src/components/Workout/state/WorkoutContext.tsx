@@ -156,7 +156,13 @@ export const WorkoutProvider = ({ children }) => {
     fetchExerciseHistories(roundExercises);
   };
 
-  const onEditRound = (roundIndex: number) => {
+  const onEditRound = async (roundIndex: number) => {
+    const newActiveRoundExercises = completedRoundList.find((round, index) => index === roundIndex)?.setList[0].map(set => set.exercise);
+
+    if (newActiveRoundExercises) {
+      await fetchExerciseHistories(newActiveRoundExercises);
+    }
+    
     dispatch(WorkoutActions.editRound({ roundIndex }));
   };
 
