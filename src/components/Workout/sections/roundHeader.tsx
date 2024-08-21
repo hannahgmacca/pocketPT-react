@@ -27,7 +27,7 @@ const RoundHeader = (props: Props) => {
         <p>
           {round.setList[0].map((setGroup, setGroupIndex) => {
             return (
-              <span key={setGroupIndex}>
+              <span key={setGroupIndex} style={{color: getIndexedColour(setGroupIndex)}}>
                 {`${getCharacterIndex(setGroupIndex)}. ${setGroup.exercise.exerciseName} `}
                 <EachSideToggle exercise={setGroup.exercise} />
                 <br></br>

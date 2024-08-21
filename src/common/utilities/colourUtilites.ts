@@ -1,5 +1,5 @@
 const workoutAppColors = [
-  '#2e2e2e', // Bright Red
+  'white', // Bright Red
   '#4ECDC4', // Teal
   '#1A535C', // Dark Cyan
   '#FF6F61', // Coral

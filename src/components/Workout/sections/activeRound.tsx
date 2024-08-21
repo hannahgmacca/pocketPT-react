@@ -8,6 +8,7 @@ import { faTrophy, faX } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import { WorkoutContext } from '../state/WorkoutContext';
 import RoundHeader from './roundHeader';
+import { getIndexedColour } from '../../../common/utilities/colourUtilites';
 
 type Props = {
   activeRound: Round;
@@ -53,7 +54,7 @@ const ActiveRound = (props: Props) => {
                 return (
                   <Row key={setItemIndex} className='set-row p-1 mb-1'>
                     <Col xs={3}>
-                      <span className='white bubble'>
+                      <span className='white bubble' style={{color: getIndexedColour(setItemIndex)}}>
                         {activeRound.roundSetType === RoundSetType.singleSet
                           ? setIndex + 1
                           : `${setIndex + 1}${getCharacterIndex(setItemIndex)}`}
